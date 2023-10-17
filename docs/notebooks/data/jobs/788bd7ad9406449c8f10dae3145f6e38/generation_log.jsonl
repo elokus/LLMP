@@ -1,0 +1,1 @@
+{"event_id": "2283d2eb020447459d385b7eb90cf7fb", "input": {"book_title": "Harry Potter", "book_author": "J. K. Rowling", "release_year": 1997}, "output": {"genre": "fantasy", "has_sequal": true, "sequal_name": "Harry Potter and the Chamber of Secrets"}}
