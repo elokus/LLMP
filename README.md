@@ -13,13 +13,14 @@ LLMP provides a high-level abstraction for creating, storing, and optimizing gen
 
 ### Installation
 ```bash
-pip install llmp
+pip install pyllmp
 ```
 
 ### Creating a Job
 
 ```python
 from pydantic import BaseModel
+from typing import Literal
 from llmp.services.program import Program
 
 class InputObject(BaseModel):
