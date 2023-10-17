@@ -3,4 +3,4 @@
 /.pypirc
 /dist
 /llmp.egg-info
-/._notebooks
+/_notebooks
