@@ -7,8 +7,8 @@ Think step-by-step to reverse engineer the task instruction. What other inputs m
 Input Model: {inp_model}
 Output Model: {out_model}
 ---
-Reasoning: <multiline>
-Instruction: <multiline>
+Reasoning: <str>
+Instruction: <str>
 """
 
 INSTRUCTION_FROM_MODEL_AND_EXAMPLES = """Create the task instruction based on the input and output model for the task provided below. The Input and Output Object are provided as a guide to the format of the input and output objects. The input and output objects may be different for each task but will have the same keys. So you should not include any information from the example given, instead you should use the input and output keys to describe the input and output objects.
@@ -23,8 +23,8 @@ Output Model: {out_model}
 Example Input Object: {input_object}
 Example Output Output: {output_object}
 ---
-Reasoning: <multiline>
-Instruction: <multiline>
+Reasoning: <str>
+Instruction: <str>
 """
 
 INSTRUCTION_FROM_WORKING_OUT = """I gave a friend an instruction and some advice. They followed the instruction to get and advice to use the input and got the correct output.
@@ -35,7 +35,7 @@ Below are the correct examples of his workings out. Can you work out what the in
 Input: {input_object}
 Output: {output_object}
 ---
-The Instruction was: <multiline>
+The Instruction was: <str>
 """
 
 MUTATE_INSTRUCTION = """# Instruction
@@ -59,8 +59,8 @@ Think step-by-step to reconstruct a detailed task instruction. What hints should
 Input Model: {inp_model}
 Output Model: {out_model}
 ---
-Reasoning: <multiline>
-The Instruction Was: <multiline>
+Reasoning: <str>
+The Instruction Was: <str>
 """
 
 EXTEND_MUTATE_INSTRUCTION_BY_EXAMPLE = """# Instruction
@@ -75,6 +75,6 @@ DON'T add details from the Example as the task will have different inputs and ou
 Input Example: {input_example}
 Output Example: {output_example}
 ---
-Reasoning: <multiline>
-The Instruction Was: <multiline>
+Reasoning: <str>
+The Instruction Was: <str>
 """
