@@ -1,6 +1,7 @@
 from llmp.components.base import BaseInstructionHandler
 from llmp.components.instruction.utils import mutate_instruction, generate_instruction_from_models, instruction_from_working_out
 
+
 class InstructionGenerator(BaseInstructionHandler):
 
     def run(self):
