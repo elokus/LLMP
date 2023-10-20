@@ -96,7 +96,7 @@ class BaseGenerator(ABC):
 
 
 class BaseInstructionHandler(ABC):
-    def __init__(self, job: JobRecord, debug: bool = False):
+    def __init__(self, job: JobRecord, debug: bool = False, **kwargs):
         self.job = job
         self.debug = debug
 

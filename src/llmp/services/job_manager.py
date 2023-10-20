@@ -53,7 +53,7 @@ class JobManager:
 
         # generate instruction
         if not job.instruction:
-            job.instruction = self.generate_instruction(job)
+            job.instruction = self.generate_instruction(job, **kwargs)
             self.job_storage.update_job(job)
 
         return job
@@ -89,9 +89,9 @@ class JobManager:
         return result
 
 
-    def generate_instruction(self, job: JobRecord) -> str:
+    def generate_instruction(self, job: JobRecord, **kwargs) -> str:
         """Generate an instruction for a specific job."""
-        generator = InstructionGenerator(job)
+        generator = InstructionGenerator(job, **kwargs)
         return generator.run()
 
     def generate_examples_for_job(self, job_id: str, target_count: int):

@@ -2217,6 +2217,23 @@ files = [
 pytest = ">=2.6.0"
 
 [[package]]
+name = "pytest-mock"
+version = "3.12.0"
+description = "Thin-wrapper around the mock package for easier use with pytest"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytest-mock-3.12.0.tar.gz", hash = "sha256:31a40f038c22cad32287bb43932054451ff5583ff094bca6f675df2f8bc1a6e9"},
+    {file = "pytest_mock-3.12.0-py3-none-any.whl", hash = "sha256:0972719a7263072da3a21c7f4773069bcc7486027d7e8e1f81d98a47e701bc4f"},
+]
+
+[package.dependencies]
+pytest = ">=5.0"
+
+[package.extras]
+dev = ["pre-commit", "pytest-asyncio", "tox"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -2923,13 +2940,13 @@ tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
 name = "structgenie"
-version = "0.1.13"
+version = "0.1.15"
 description = "LLM Generation Framework for structured outputs with type validation"
 optional = false
 python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "structgenie-0.1.13-py3-none-any.whl", hash = "sha256:83dbb780bdbe831f2448bd11c1f8113ba70550062d8d73261231fe22b5bd9fcc"},
-    {file = "structgenie-0.1.13.tar.gz", hash = "sha256:534c9817f91255001b399afc4eb5d4b160b429cc54c06d33bf41ec81da601066"},
+    {file = "structgenie-0.1.15-py3-none-any.whl", hash = "sha256:3ed34439f76c7224fdd2fc9ffb5b9e3d9d830703034f07fbc5767fc55977d5a9"},
+    {file = "structgenie-0.1.15.tar.gz", hash = "sha256:2457fff6d3bdf8874a6b26087addcaeb285e3d34780f7496b10b476bbf3e2e79"},
 ]
 
 [package.dependencies]
@@ -2940,6 +2957,7 @@ openai = "0.28.1"
 pydantic = "1.10.8"
 pytest = ">=7.4.2,<8.0.0"
 pytest-env = ">=0.6.2,<0.7.0"
+pytest-mock = ">=3.6.1,<4.0.0"
 python-dotenv = "1.0.0"
 pyyaml = "6.0"
 tiktoken = "0.4.0"
@@ -3366,4 +3384,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "0ea6539b0b5847ff5e6f852df169404407ba282b91a197e68e6f43eccc577787"
+content-hash = "88b14fae27620fb4290d258e345e2c0f64a77a450106c9eeab77c682b40b536f"

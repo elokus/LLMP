@@ -14,6 +14,7 @@ class InstructionGenerator(BaseInstructionHandler):
             return instruction_from_working_out(
                 input_object=self.job.example_records[0].input,
                 output_object=self.job.example_records[0].output,
+                debug=self.debug,
             )
         else:
             if self.debug:
@@ -22,4 +23,5 @@ class InstructionGenerator(BaseInstructionHandler):
             return generate_instruction_from_models(
                 input_model=self.job.input_model,
                 output_model=self.job.output_model,
+                debug=self.debug,
             )

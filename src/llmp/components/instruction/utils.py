@@ -31,7 +31,7 @@ def mutate_instruction(instruction: str, num: int = 2, **kwargs) -> list[str]:
             prompt_kwargs={"set_format_tags": False},
             **kwargs
         )
-        result = engine.run(
+        result, metrics = engine.run(
             dict(
                 instruction=instruction,
                 mutation_instruction=mut_inst,
@@ -51,7 +51,7 @@ def extend_instruction_by_model(instruction: str, input_model: InputModel, outpu
         **kwargs
     )
 
-    result = engine.run(
+    result, metrics = engine.run(
         dict(
             mutate_instruction=instruction,
             inp_model=input_model.template_schema,
@@ -70,7 +70,7 @@ def extend_instruction_by_example(instruction: str, input_example: dict, output_
         **kwargs
     )
 
-    result = engine.run(
+    result, metrics = engine.run(
         dict(
             mutate_instruction=instruction,
             input_example=input_example,
@@ -88,7 +88,7 @@ def instruction_from_working_out(input_object: dict, output_object: dict, **kwar
         **kwargs
     )
 
-    result = engine.run(
+    result, metrics = engine.run(
         dict(
             input_object=input_object,
             output_object=output_object,
@@ -111,7 +111,7 @@ def generate_instruction_from_model_and_template(
         **kwargs
     )
 
-    result = engine.run(
+    result, metrics = engine.run(
         dict(
             inp_model=input_model.template_schema,
             out_model=output_model.template_schema,
@@ -133,7 +133,7 @@ def generate_instruction_from_models(
         template.INSTRUCTION_FROM_MODEL,
         prompt_kwargs={"set_format_tags": False}, **kwargs)
 
-    result = engine.run(
+    result, metrics = engine.run(
         dict(
             inp_model=input_model.template_schema,
             out_model=output_model.template_schema,
