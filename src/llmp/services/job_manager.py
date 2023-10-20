@@ -86,7 +86,10 @@ class JobManager:
         }
         job.log_generation(input_data, result, event_metric)
         self.job_storage.store_logs(job)
-        return result
+
+        return result, run_metrics
+
+
 
 
     def generate_instruction(self, job: JobRecord, **kwargs) -> str:

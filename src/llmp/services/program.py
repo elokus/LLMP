@@ -94,6 +94,7 @@ class Program:
             input_data: dict,
             auto_optimize: bool = True,
             log_action: bool = True,
+            return_metrics: bool = False,
             **kwargs):
         """Generate output for a specific input.
 
@@ -106,12 +107,17 @@ class Program:
             is_first_run = True
             generator_type = "consensus"
 
-        output = self.job_manager.generate_output(self.job, input_data, generator_type=generator_type, **kwargs)
+        output, run_metrics = self.job_manager.generate_output(
+            self.job, input_data, generator_type=generator_type, return_metrics=return_metrics, **kwargs
+        )
 
         if is_first_run:
             self.job_manager.optimize_job(self.job, mode="all")
 
-        return dotdict(output)
+        dotdict_output = dotdict(output)
+        if return_metrics:
+            dotdict_output.run_metrics = run_metrics
+        return dotdict_output
 
 
 
