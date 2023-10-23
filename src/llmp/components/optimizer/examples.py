@@ -1,29 +1,47 @@
 """
 Example Optimizer
-
-Example Selection OPTIONS:
-    1. Select Examples with the highest failing rate
-    2. Select Examples with the highest failing rate and lowest accuracy
-    3. Select random Examples
-    4. Step by step selection of Examples
-
-Preferred Option: 4 first test best two examples, then add one example at a time and test again.
-When testing from 15 Examples all combinations of 2 we will get a total of 105 combinations.
-Instead of testing from 15 Examples all combinations of 3 we will get a total of 455 combinations.
-After defining best two examples we can test with additional 13 test runs to get a total of 118 test runs for three examples.
-
-Alternatively we can try to find the best One Shot Example. This would end up in the smallest number of test runs,
-but we would miss eventually better example combinations.
-
 """
+
 from llmp.components.base import BaseOptimizer
 from llmp.components.evaluation.engine import EvaluationEngine
 from llmp.components.example_manager import ExampleManager
 from llmp.data_model import JobRecord, ExampleRecord
 from llmp.types import TestSetMode
 
+# Example Selection OPTIONS:
+#     1. Select Examples with the highest failing rate
+#     2. Select Examples with the highest failing rate and lowest accuracy
+#     3. Select random Examples
+#     4. Step by step selection of Examples
+#
+# Preferred Option: 4 first test best two examples, then add one example at a time and test again.
+# When testing from 15 Examples all combinations of 2 we will get a total of 105 combinations.
+# Instead of testing from 15 Examples all combinations of 3 we will get a total of 455 combinations.
+# After defining best two examples we can test with additional 13 test runs to get a total of 118 test runs for three examples.
+#
+# Alternatively we can try to find the best One Shot Example. This would end up in the smallest number of test runs,
+# but we would miss eventually better example combinations.
 
 class ExampleOptimizer(BaseOptimizer):
+    """Example Optimizer for a given job.
+
+    The ExampleOptimizer is used to optimize the examples for a given job.
+
+
+    Attributes:
+        job: JobRecord
+        debug: bool
+        display_progress: bool
+        progress_bar_config: dict
+        MIN_EXAMPLES: int
+        TEST_SIZE: int
+        PROMPT_SAMPLE_SIZE: int
+        SELECT_MODE: str
+        INSTRUCTION_TEST_SIZE: int
+        RUN_PER_SAMPLE: int
+
+    """
+
 
     MIN_EXAMPLES: int = 20
     TEST_SIZE: int = 5
@@ -106,7 +124,7 @@ class ExampleOptimizer(BaseOptimizer):
 
         return current_set, current_metric
 
-    def evaluate(self, job_settings: list[dict], pabr, **kwargs):
+    def evaluate(self, job_settings: list[dict], **kwargs):
 
         pbar = self.get_progress_bar(len(job_settings), "Evaluating Examples", leave=False, sub=True)
         results = []

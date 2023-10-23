@@ -113,6 +113,10 @@ class JobManager:
         """Submit an example for human verification and get the result."""
         pass
 
+    def get_job_by_input_output_model(self, input_model: str, output_model: str) -> JobRecord:
+        """Retrieve a job by input/output model."""
+        pass
+
     def log_action(self, action: str, job_id: str):
         """Log a specific action related to a job."""
         pass

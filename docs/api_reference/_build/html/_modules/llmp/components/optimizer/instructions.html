@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>llmp.components.optimizer.instructions &mdash; LLMP 0.0.2</title>
+  
+  <link rel="canonical" href="https://api.python.langchain.com/en/latest/_modules/llmp/components/optimizer/instructions.html" />
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/vendor/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/autodoc_pydantic.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+<script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+<script src="../../../../_static/jquery.js"></script> 
+</head>
+<body>
+
+
+<nav id="navbar" class="sk-docs-navbar navbar navbar-expand-md navbar-light bg-light py-0">
+  <div class="container-fluid sk-docs-container px-0">
+    <button
+      id="sk-navbar-toggler"
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="sk-navbar-collapse collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../../../../api_reference.html">API</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../../../../experimental_api_reference.html">Experimental</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" target="_blank" rel="noopener noreferrer" href="https://python.langchain.com/">Python Docs</a>
+        </li>
+      </ul>
+      <div id="searchbox" role="search">
+          <div class="searchformwrapper">
+          <form class="search" action="../../../../search.html" method="get">
+            <input class="sk-search-text-input" type="text" name="q" aria-labelledby="searchlabel" />
+            <input class="sk-search-text-btn" type="submit" value="Go" />
+          </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="d-flex" id="sk-doc-wrapper">
+    <input type="checkbox" name="sk-toggle-checkbox" id="sk-toggle-checkbox">
+    <label id="sk-sidemenu-toggle" class="sk-btn-toggle-toc btn sk-btn-primary" for="sk-toggle-checkbox">Toggle Menu</label>
+    <div id="sk-sidebar-wrapper" class="border-right">
+      <div class="sk-sidebar-toc-wrapper">
+        <div class="btn-group w-100 mb-2" role="group" aria-label="rellinks">
+            <a href="#" role="button" class="btn sk-btn-rellink py-1 disabled"">Prev</a><a href="../../../index.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="Module code">Up</a>
+            <a href="#" role="button" class="btn sk-btn-rellink py-1 disabled"">Next</a>
+        </div>
+        <div class="alert alert-warning p-1 mb-2" role="alert">
+          <p class="text-center mb-0">
+          <strong>LangChain 0.0.2</strong><br/>
+          </p>
+        </div>
+            <div class="sk-sidebar-toc">
+              
+            </div>
+      </div>
+    </div>
+    <div id="sk-page-content-wrapper">
+      <div class="sk-page-content container-fluid body px-md-3" role="main">
+        
+  <h1>Source code for llmp.components.optimizer.instructions</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Optimization Process:</span>
+<span class="sd">    1. Create 20 Examples per MajorVoteGenerator</span>
+<span class="sd">    2. Create an Instruction Test set</span>
+<span class="sd">    3. Test different Example sets&quot;&quot;&quot;</span>
+
+<span class="c1"># ============================</span>
+<span class="c1">#</span>
+<span class="c1"># Example Selection OPTIONS:</span>
+<span class="c1">#     1. Select Examples with the highest failing rate</span>
+<span class="c1">#     2. Select Examples with the highest failing rate and lowest accuracy</span>
+<span class="c1">#     3. Select random Examples</span>
+<span class="c1">#     4. Step by step selection of Examples</span>
+<span class="c1">#</span>
+<span class="c1"># Preferred Option: 4 first test best two examples, then add one example at a time and test again.</span>
+<span class="c1"># When testing from 15 Examples all combinations of 2 we will get a total of 105 combinations.</span>
+<span class="c1"># Instead of testing from 15 Examples all combinations of 3 we will get a total of 455 combinations.</span>
+<span class="c1"># After defining best two examples we can test with additional 13 test runs to get a total of 118 test runs for three examples.</span>
+<span class="c1">#</span>
+<span class="c1"># Alternatively we can try to find the best One Shot Example. This would end up in the smallest number of test runs,</span>
+<span class="c1"># but we would miss eventually better example combinations.</span>
+
+<span class="kn">import</span> <span class="nn">tqdm</span>
+
+
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+
+<span class="kn">from</span> <span class="nn">llmp.components.base</span> <span class="kn">import</span> <span class="n">BaseOptimizer</span>
+<span class="kn">from</span> <span class="nn">llmp.components.evaluation.engine</span> <span class="kn">import</span> <span class="n">EvaluationEngine</span>
+<span class="kn">from</span> <span class="nn">llmp.components.example_manager</span> <span class="kn">import</span> <span class="n">ExampleManager</span>
+<span class="kn">from</span> <span class="nn">llmp.data_model</span> <span class="kn">import</span> <span class="n">JobRecord</span><span class="p">,</span> <span class="n">ExampleRecord</span>
+<span class="kn">from</span> <span class="nn">llmp.types</span> <span class="kn">import</span> <span class="n">TestSetMode</span>
+<span class="kn">import</span> <span class="nn">llmp.components.optimizer._prompts</span> <span class="k">as</span> <span class="nn">prompts</span>
+<span class="kn">from</span> <span class="nn">llmp.integration.structgenie</span> <span class="kn">import</span> <span class="n">Engine</span>
+
+
+<div class="viewcode-block" id="InstructionOptimizer"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer">[docs]</a><span class="k">class</span> <span class="nc">InstructionOptimizer</span><span class="p">(</span><span class="n">BaseOptimizer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instruction Optimizer for a given job.</span>
+
+<span class="sd">    The InstructionOptimizer is used to optimize the instructions for a given job.</span>
+<span class="sd">    It runs an TestSet of Examples with different instructions and returns the best instruction.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">MIN_EXAMPLES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">TEST_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">PROMPT_SAMPLE_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">SELECT_MODE</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">TestSetMode</span><span class="o">.</span><span class="n">ACCURACY</span>
+    <span class="n">INSTRUCTION_TEST_SIZE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">RUN_PER_SAMPLE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+
+<div class="viewcode-block" id="InstructionOptimizer.__init__"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">job</span><span class="p">:</span> <span class="n">JobRecord</span><span class="p">,</span>
+            <span class="n">test_set</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ExampleRecord</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">display_progress</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">debug</span><span class="p">,</span> <span class="n">display_progress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">example_manager</span> <span class="o">=</span> <span class="n">ExampleManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_set</span> <span class="o">=</span> <span class="n">test_set</span></div>
+
+<div class="viewcode-block" id="InstructionOptimizer.prepare_job"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer.prepare_job">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_job</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># create 20 examples per MajorVoteGenerator</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">example_records</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROMPT_SAMPLE_SIZE</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt;&gt;&gt; Filling examples to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">PROMPT_SAMPLE_SIZE</span><span class="si">}</span><span class="s2"> examples.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">example_manager</span><span class="o">.</span><span class="n">fill_examples</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">PROMPT_SAMPLE_SIZE</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="o">.</span><span class="n">example_records</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MIN_EXAMPLES</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt;&gt;&gt; Filling examples to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">MIN_EXAMPLES</span><span class="si">}</span><span class="s2"> examples.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">example_manager</span><span class="o">.</span><span class="n">fill_examples</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MIN_EXAMPLES</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_set</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_manager</span><span class="o">.</span><span class="n">get_test_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TEST_SIZE</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SELECT_MODE</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InstructionOptimizer.optimize"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;accuracy&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Optimize the prompts and examples for a specific job.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prepare_job</span><span class="p">()</span>
+
+        <span class="c1"># step 2: create an instruction test set</span>
+
+        <span class="n">example_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_manager</span><span class="o">.</span><span class="n">get_test_set</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">PROMPT_SAMPLE_SIZE</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SELECT_MODE</span><span class="p">,</span> <span class="n">exclude_ids</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_set_ids</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt; Generating Instructions&quot;</span><span class="p">)</span>
+        <span class="n">instructions</span> <span class="o">=</span> <span class="n">Engine</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">prompts</span><span class="o">.</span><span class="n">INSTRUCTION_TEMPLATE</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;example_set&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">examples_to_prompt</span><span class="p">(</span><span class="n">example_set</span><span class="p">),</span> <span class="s2">&quot;num_instructions&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">INSTRUCTION_TEST_SIZE</span><span class="p">})[</span><span class="s2">&quot;instructions&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Instructions:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">instruction</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">instructions</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">instruction</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+        <span class="n">test_settings</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;instruction&quot;</span><span class="p">:</span> <span class="n">instruction</span><span class="p">,</span> <span class="s2">&quot;example_ids&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">idx</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">example_set</span><span class="p">]}</span>
+            <span class="k">for</span> <span class="n">instruction</span> <span class="ow">in</span> <span class="n">instructions</span>
+        <span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_settings</span><span class="p">)</span>
+        <span class="n">best_index</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">metric</span><span class="p">]))</span>
+        <span class="n">best_setting</span> <span class="o">=</span> <span class="n">test_settings</span><span class="p">[</span><span class="n">best_index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">best_setting</span><span class="p">,</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="InstructionOptimizer.evaluate"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_settings</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">job_settings</span><span class="p">),</span> <span class="n">dynamic_ncols</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_progress</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="s2">&quot;Evaluating Instructions&quot;</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">job_setting</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">job_settings</span><span class="p">):</span>
+            <span class="n">evaluator</span> <span class="o">=</span> <span class="n">EvaluationEngine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">RUN_PER_SAMPLE</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_set</span><span class="p">,</span> <span class="n">job_setting</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pbar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="InstructionOptimizer.examples_to_prompt"><a class="viewcode-back" href="../../../../components/llmp.components.optimizer.instructions.InstructionOptimizer.html#llmp.components.optimizer.instructions.InstructionOptimizer.examples_to_prompt">[docs]</a>    <span class="k">def</span> <span class="nf">examples_to_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">examples</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ExampleRecord</span><span class="p">]):</span>
+        <span class="k">return</span> <span class="p">[{</span><span class="s2">&quot;input&quot;</span><span class="p">:</span> <span class="n">example</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="n">example</span><span class="o">.</span><span class="n">output</span><span class="p">}</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">test_set_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">idx</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_set</span><span class="p">]</span></div>
+</pre></div>
+
+      </div>
+    <div class="container">
+      <footer class="sk-content-footer">
+            &copy; 2023, Lukasz Kowejsza.
+          Last updated on Oct 23, 2023.
+      </footer>
+    </div>
+  </div>
+</div>
+<script src="../../../../_static/js/vendor/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    /* Add a [>>>] button on the top-right corner of code samples to hide
+     * the >>> and ... prompts and the output and thus make the code
+     * copyable. */
+    var div = $('.highlight-python .highlight,' +
+                '.highlight-python3 .highlight,' +
+                '.highlight-pycon .highlight,' +
+		'.highlight-default .highlight')
+    var pre = div.find('pre');
+
+    // get the styles from the current theme
+    pre.parent().parent().css('position', 'relative');
+    var hide_text = 'Hide prompts and outputs';
+    var show_text = 'Show prompts and outputs';
+
+    // create and add the button to all the code blocks that contain >>>
+    div.each(function(index) {
+        var jthis = $(this);
+        if (jthis.find('.gp').length > 0) {
+            var button = $('<span class="copybutton">&gt;&gt;&gt;</span>');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+            jthis.prepend(button);
+        }
+        // tracebacks (.gt) contain bare text elements that need to be
+        // wrapped in a span to work with .nextUntil() (see later)
+        jthis.find('pre:has(.gt)').contents().filter(function() {
+            return ((this.nodeType == 3) && (this.data.trim().length > 0));
+        }).wrap('<span>');
+    });
+
+    // define the behavior of the button when it's clicked
+    $('.copybutton').click(function(e){
+        e.preventDefault();
+        var button = $(this);
+        if (button.data('hidden') === 'false') {
+            // hide the code output
+            button.parent().find('.go, .gp, .gt').hide();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'hidden');
+            button.css('text-decoration', 'line-through');
+            button.attr('title', show_text);
+            button.data('hidden', 'true');
+        } else {
+            // show the code output
+            button.parent().find('.go, .gp, .gt').show();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'visible');
+            button.css('text-decoration', 'none');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+        }
+    });
+
+	/*** Add permalink buttons next to glossary terms ***/
+	$('dl.glossary > dt[id]').append(function() {
+		return ('<a class="headerlink" href="#' +
+			    this.getAttribute('id') +
+			    '" title="Permalink to this term">¶</a>');
+	});
+});
+
+</script>
+    
+</body>
+</html>

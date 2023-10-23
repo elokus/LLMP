@@ -13,6 +13,12 @@ class EvaluationEngine(BaseEvaluationEngine):
     """
 
     def __init__(self, job: JobRecord, num_runs: int = 5):
+        """Initialize the EvaluationEngine with a job and job settings.
+
+        Args:
+            job: JobRecord
+            num_runs: int
+        """
         super().__init__(job)
         self._num_runs = num_runs
 

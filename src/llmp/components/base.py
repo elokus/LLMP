@@ -61,8 +61,22 @@ class BaseOptimizer(ABC):
 
 
 class BaseGenerator(ABC):
+    """Base class for the Generator component.
+
+    A Generator is a wrapper for executing job-specific completion with a job specific input object.
+    """
+
 
     def __init__(self, job: JobRecord, job_settings: dict = None, **kwargs):
+        """Initialize the generator with a job and job settings.
+
+        Args:
+            job (JobRecord): the job to be executed
+            job_settings (dict): the job settings to be used
+            **kwargs: any -  passed to load_engine_from_job
+
+        """
+
         self.job = job
         self._debug = kwargs.get("debug", False)
         self._job_settings = job_settings or {}
@@ -72,7 +86,14 @@ class BaseGenerator(ABC):
     def log_generation(
             self, input_object: dict, generated_object: dict, run_metrics: dict, **kwargs
     ) -> Union[Event, None]:
-        """Log the generation result."""
+        """Log the generation result.
+
+        Args:
+            input_object (dict): the input object
+            generated_object (dict): the generated object
+            run_metrics (dict): the run metrics
+            **kwargs: any -  passed to JobRecord.log_generation
+        """
         if not self.verification_type or not self._report_generation:
             return None
 

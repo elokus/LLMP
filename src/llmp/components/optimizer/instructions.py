@@ -1,25 +1,24 @@
 """Optimization Process:
     1. Create 20 Examples per MajorVoteGenerator
     2. Create an Instruction Test set
-    3. Test different Example sets
+    3. Test different Example sets"""
 
-============================
+# ============================
+#
+# Example Selection OPTIONS:
+#     1. Select Examples with the highest failing rate
+#     2. Select Examples with the highest failing rate and lowest accuracy
+#     3. Select random Examples
+#     4. Step by step selection of Examples
+#
+# Preferred Option: 4 first test best two examples, then add one example at a time and test again.
+# When testing from 15 Examples all combinations of 2 we will get a total of 105 combinations.
+# Instead of testing from 15 Examples all combinations of 3 we will get a total of 455 combinations.
+# After defining best two examples we can test with additional 13 test runs to get a total of 118 test runs for three examples.
+#
+# Alternatively we can try to find the best One Shot Example. This would end up in the smallest number of test runs,
+# but we would miss eventually better example combinations.
 
-Example Selection OPTIONS:
-    1. Select Examples with the highest failing rate
-    2. Select Examples with the highest failing rate and lowest accuracy
-    3. Select random Examples
-    4. Step by step selection of Examples
-
-Preferred Option: 4 first test best two examples, then add one example at a time and test again.
-When testing from 15 Examples all combinations of 2 we will get a total of 105 combinations.
-Instead of testing from 15 Examples all combinations of 3 we will get a total of 455 combinations.
-After defining best two examples we can test with additional 13 test runs to get a total of 118 test runs for three examples.
-
-Alternatively we can try to find the best One Shot Example. This would end up in the smallest number of test runs,
-but we would miss eventually better example combinations.
-
-"""
 import tqdm
 
 
@@ -35,6 +34,11 @@ from llmp.integration.structgenie import Engine
 
 
 class InstructionOptimizer(BaseOptimizer):
+    """Instruction Optimizer for a given job.
+
+    The InstructionOptimizer is used to optimize the instructions for a given job.
+    It runs an TestSet of Examples with different instructions and returns the best instruction.
+    """
 
     MIN_EXAMPLES: int = 20
     TEST_SIZE: int = 5

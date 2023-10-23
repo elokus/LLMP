@@ -1,38 +1,35 @@
-"""Decide how version history should be handled. When storing an instruction and a set of examples ids
-per version, we need to track also the version of the examples. When rolling back, we need to decide whether to
-roll back the examples as well.
-
-Option 1: Roll back the examples as well. This is the most straightforward option, but so that the previous metrics stay
-consistent. However, this might not be the best option, because the examples might have been updated for a reason.
-
-Option 2: Keep the newest version of the examples. This should be preferred option on default. However, this might
-cause issues when rolling back, because the metrics might not be consistent with the updated examples. So we need to
-recompute the metrics for the previous version.
-TODO: add a flag to rollback method for "hard" or "soft" rollback
-
----
-# Generation History
-The generation history is a list of generation logs. Each generation log is a dictionary with the following keys:
-    - timestamp: The timestamp of the generation.
-    - input: The input object that was used for the generation.
-    - output: The output object that was generated.
-    - kwargs: Additional keyword arguments that were used for the generation.
-    - example_idx: The index of the example that was used for the generation.
-    - version: The version of the job that was used for the generation.
-
-While tracking the generation we want to add each generation to example records. While performing generations on
-existing examples we want to add update the example output if the new output has a higher validation rank.
-
-# TODO: Move example adding to ExampleManager?
-For this we need to update the add_generation method and remove the example creation from it. This will mean that we
-won't be able to log an example_idx in the generation history as a reference to the example record.
-Instead we could add log the event_id of the generation event.
-This will allow us to use example_manager to add examples from generation history without diluting the size of examples.
-
-
+# Decide how version history should be handled. When storing an instruction and a set of examples ids
+# per version, we need to track also the version of the examples. When rolling back, we need to decide whether to
+# roll back the examples as well.
+#
+# Option 1: Roll back the examples as well. This is the most straightforward option, but so that the previous metrics stay
+# consistent. However, this might not be the best option, because the examples might have been updated for a reason.
+#
+# Option 2: Keep the newest version of the examples. This should be preferred option on default. However, this might
+# cause issues when rolling back, because the metrics might not be consistent with the updated examples. So we need to
+# recompute the metrics for the previous version.
+# TODO: add a flag to rollback method for "hard" or "soft" rollback
+#
+# ---
+# # Generation History
+# The generation history is a list of generation logs. Each generation log is a dictionary with the following keys:
+#     - timestamp: The timestamp of the generation.
+#     - input: The input object that was used for the generation.
+#     - output: The output object that was generated.
+#     - kwargs: Additional keyword arguments that were used for the generation.
+#     - example_idx: The index of the example that was used for the generation.
+#     - version: The version of the job that was used for the generation.
+#
+# While tracking the generation we want to add each generation to example records. While performing generations on
+# existing examples we want to add update the example output if the new output has a higher validation rank.
+#
+# # TODO: Move example adding to ExampleManager?
+# For this we need to update the add_generation method and remove the example creation from it. This will mean that we
+# won't be able to log an example_idx in the generation history as a reference to the example record.
+# Instead we could add log the event_id of the generation event.
+# This will allow us to use example_manager to add examples from generation history without diluting the size of examples.
 
 
-"""
 import json
 from uuid import uuid4
 

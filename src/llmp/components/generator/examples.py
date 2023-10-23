@@ -1,23 +1,23 @@
-"""Should update the job with every new example to increase validation accuracy?
+# Should update the job with every new example to increase validation accuracy?
+#
+# Option 1: Updating the job with every new example
+#     Pros: Higher validation accuracy
+#     Cons: More expensive to update the job with every new example in regard to token usage
+# Option 2: Create new examples and return them without updating the job
+#     Pros: Less expensive to create new examples. Single Responsibility Principle for the generator.
+#     Cons: Lower validation accuracy
+#
+# Currently using option 2. We might create a second generator that uses option 1.
+#
+# TODO: add a decision module to decide if output generation should be performed with MajorVote or MajorVoteGrading.
+#
+# MajorVoteGradingGenerator is currently not used. When generating examples with definite outputs
+# MajorVoteGenerator should be preferred. MajorVoteGradingGenerator should be used when generating examples with
+# indefinite outputs. For example, when generating examples for a
+# prompt like "Write a short story about a dog." the output is indefinite.
+# In this case, MajorVoteGradingGenerator should be used.
+# This implementation should be added in the future most likely on OutputModel level or on Job level.
 
-Option 1: Updating the job with every new example
-    Pros: Higher validation accuracy
-    Cons: More expensive to update the job with every new example in regard to token usage
-Option 2: Create new examples and return them without updating the job
-    Pros: Less expensive to create new examples. Single Responsibility Principle for the generator.
-    Cons: Lower validation accuracy
-
-Currently using option 2. We might create a second generator that uses option 1.
-
-TODO: add a decision module to decide if output generation should be performed with MajorVote or MajorVoteGrading.
-
-MajorVoteGradingGenerator is currently not used. When generating examples with definite outputs
-MajorVoteGenerator should be preferred. MajorVoteGradingGenerator should be used when generating examples with
-indefinite outputs. For example, when generating examples for a
-prompt like "Write a short story about a dog." the output is indefinite.
-In this case, MajorVoteGradingGenerator should be used.
-This implementation should be added in the future most likely on OutputModel level or on Job level.
-"""
 from typing import Union
 from llmp.integration.structgenie import Engine
 
@@ -30,6 +30,12 @@ from llmp.integration.structgenie import OutputModel
 
 
 class ExampleGenerator(BaseGenerator):
+    """A Generator dedicated to generating examples for a given job.
+
+    This generator is used to generate examples for a given job with a predefined Prompt template.
+    Under the hood, it uses a MajorVoteGenerator to generate the examples.
+    """
+
     TEMPLATE: str = EXTEND_INPUTS_TEMPLATE
 
     def __init__(
@@ -40,10 +46,32 @@ class ExampleGenerator(BaseGenerator):
             mode: VerificationType = VerificationType.MAJORITY_VOTE,
             **kwargs
     ):
+        """Initialize the generator with a job and job settings.
+
+        Args:
+            job (JobRecord): the job to be executed
+            job_settings (dict): the job settings to be used
+            num_votes (int): number of votes to be collected
+            mode (VerificationType): the verification type to be used (majority vote, majority grade, human verified)
+            **kwargs: any -  passed to MajorVoteGenerator
+        """
+
         super().__init__(job, job_settings)
         self.generator = MajorVoteGenerator(job, job_settings, num_votes, mode, return_event_log=True, **kwargs)
 
     def generate(self, num_items, **kwargs) -> list[Union[ExampleRecord, dict]]:
+        """Generate examples for a given job.
+
+        1. Generate inputs with a template
+        2. Generate outputs with a MajorVoteGenerator
+
+        Args:
+            num_items (int): number of examples to be generated
+            **kwargs: any -  passed to MajorVoteGenerator.generate() method
+
+        Returns:
+            list[Union[ExampleRecord, dict]]: list of generated examples
+        """
         input_list = self._generate_inputs(num_items)
         return self._generate_outputs(input_list)
 
@@ -74,7 +102,6 @@ class ExampleGenerator(BaseGenerator):
             "input_example": [example.example.input for example in self.job.example_records],
         }
         output = engine.run(input_dict)
-        print(output["outputs"])
         return output["outputs"]
 
     @property

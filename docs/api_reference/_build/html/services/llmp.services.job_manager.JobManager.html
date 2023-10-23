@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>llmp.services.job_manager.JobManager &mdash; LLMP 0.0.2</title>
+  
+  <link rel="canonical" href="https://api.python.llmp.com/en/latest/services/llmp.services.job_manager.JobManager.html" />
+
+  
+
+  <link rel="stylesheet" href="../_static/css/vendor/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+<script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script> 
+</head>
+<body>
+
+
+<nav id="navbar" class="sk-docs-navbar navbar navbar-expand-md navbar-light bg-light py-0">
+  <div class="container-fluid sk-docs-container px-0">
+    <button
+      id="sk-navbar-toggler"
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="sk-navbar-collapse collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../api_reference.html">API</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../experimental_api_reference.html">Experimental</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" target="_blank" rel="noopener noreferrer" href="https://python.lllmp.com/">Python Docs</a>
+        </li>
+      </ul>
+      <div id="searchbox" role="search">
+          <div class="searchformwrapper">
+          <form class="search" action="../search.html" method="get">
+            <input class="sk-search-text-input" type="text" name="q" aria-labelledby="searchlabel" />
+            <input class="sk-search-text-btn" type="submit" value="Go" />
+          </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="d-flex" id="sk-doc-wrapper">
+    <input type="checkbox" name="sk-toggle-checkbox" id="sk-toggle-checkbox">
+    <label id="sk-sidemenu-toggle" class="sk-btn-toggle-toc btn sk-btn-primary" for="sk-toggle-checkbox">Toggle Menu</label>
+    <div id="sk-sidebar-wrapper" class="border-right">
+      <div class="sk-sidebar-toc-wrapper">
+        <div class="btn-group w-100 mb-2" role="group" aria-label="rellinks">
+            <a href="../integration/llmp.integration.example_selector.ExampleManagerSelector.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp.integration.example_selector.ExampleManagerSelector">Prev</a><a href="../api_reference.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp API Reference">Up</a>
+            <a href="llmp.services.job_storage.JobStorage.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp.services.job_storage.JobStorage">Next</a>
+        </div>
+        <div class="alert alert-warning p-1 mb-2" role="alert">
+          <p class="text-center mb-0">
+          <strong>LLMP 0.0.2</strong><br/>
+          </p>
+        </div>
+            <div class="sk-sidebar-toc">
+              <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">llmp.services.job_manager</span></code>.JobManager</a></li>
+</ul>
+
+            </div>
+      </div>
+    </div>
+    <div id="sk-page-content-wrapper">
+      <div class="sk-page-content container-fluid body px-md-3" role="main">
+        
+  <section id="llmp-services-job-manager-jobmanager">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">llmp.services.job_manager</span></code>.JobManager<a class="headerlink" href="#llmp-services-job-manager-jobmanager" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">llmp.services.job_manager.</span></span><span class="sig-name descname"><span class="pre">JobManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.__init__" title="llmp.services.job_manager.JobManager.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(config)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.create_job" title="llmp.services.job_manager.JobManager.create_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_job</span></code></a>(job_name, **kwargs)</p></td>
+<td><p>Create a new job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.delete_job" title="llmp.services.job_manager.JobManager.delete_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_job</span></code></a>(signature)</p></td>
+<td><p>Delete a specific job.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.evaluate_job_performance" title="llmp.services.job_manager.JobManager.evaluate_job_performance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate_job_performance</span></code></a>(job_id)</p></td>
+<td><p>Evaluate the performance metrics for a specific job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.generate_examples_for_job" title="llmp.services.job_manager.JobManager.generate_examples_for_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_examples_for_job</span></code></a>(job_id, target_count)</p></td>
+<td><p>Generate additional examples for a specific job.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.generate_instruction" title="llmp.services.job_manager.JobManager.generate_instruction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_instruction</span></code></a>(job, **kwargs)</p></td>
+<td><p>Generate an instruction for a specific job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.generate_output" title="llmp.services.job_manager.JobManager.generate_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_output</span></code></a>(job, input_data[, ...])</p></td>
+<td><p>Generate output for a specific input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.get_job" title="llmp.services.job_manager.JobManager.get_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_job</span></code></a>(signature)</p></td>
+<td><p>Retrieve details for a specific job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.get_job_by_input_output_model" title="llmp.services.job_manager.JobManager.get_job_by_input_output_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_job_by_input_output_model</span></code></a>(input_model, ...)</p></td>
+<td><p>Retrieve a job by input/output model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.get_job_metrics" title="llmp.services.job_manager.JobManager.get_job_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_job_metrics</span></code></a>(job_id)</p></td>
+<td><p>Retrieve metrics for a specific job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.human_verify_example" title="llmp.services.job_manager.JobManager.human_verify_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">human_verify_example</span></code></a>(example)</p></td>
+<td><p>Submit an example for human verification and get the result.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.log_action" title="llmp.services.job_manager.JobManager.log_action"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_action</span></code></a>(action, job_id)</p></td>
+<td><p>Log a specific action related to a job.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.optimize_job" title="llmp.services.job_manager.JobManager.optimize_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimize_job</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Run the optimization process for a job, including generating examples and refining instructions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#llmp.services.job_manager.JobManager.update_job" title="llmp.services.job_manager.JobManager.update_job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_job</span></code></a>(job)</p></td>
+<td><p>Update details of a specific job.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.create_job">
+<span class="sig-name descname"><span class="pre">create_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.create_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.create_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new job.</p>
+<p>Generate a new job with the provided signature and kwargs.
+If not provided, the instruction will be generated automatically.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.delete_job">
+<span class="sig-name descname"><span class="pre">delete_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.delete_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.delete_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.evaluate_job_performance">
+<span class="sig-name descname"><span class="pre">evaluate_job_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.evaluate_job_performance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.evaluate_job_performance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the performance metrics for a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.generate_examples_for_job">
+<span class="sig-name descname"><span class="pre">generate_examples_for_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.generate_examples_for_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.generate_examples_for_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate additional examples for a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.generate_instruction">
+<span class="sig-name descname"><span class="pre">generate_instruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.generate_instruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.generate_instruction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an instruction for a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.generate_output">
+<span class="sig-name descname"><span class="pre">generate_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generator_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.generate_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.generate_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate output for a specific input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.get_job">
+<span class="sig-name descname"><span class="pre">get_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.get_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.get_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve details for a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.get_job_by_input_output_model">
+<span class="sig-name descname"><span class="pre">get_job_by_input_output_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.get_job_by_input_output_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.get_job_by_input_output_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a job by input/output model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.get_job_metrics">
+<span class="sig-name descname"><span class="pre">get_job_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.get_job_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.get_job_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve metrics for a specific job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.human_verify_example">
+<span class="sig-name descname"><span class="pre">human_verify_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.example_record.ExampleRecord.html#llmp.data_model.example_record.ExampleRecord" title="llmp.data_model.example_record.ExampleRecord"><span class="pre">ExampleRecord</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.human_verify_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.human_verify_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submit an example for human verification and get the result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.log_action">
+<span class="sig-name descname"><span class="pre">log_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.log_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.log_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a specific action related to a job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.optimize_job">
+<span class="sig-name descname"><span class="pre">optimize_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.optimize_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.optimize_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the optimization process for a job, including generating examples and refining instructions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.services.job_manager.JobManager.update_job">
+<span class="sig-name descname"><span class="pre">update_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/services/job_manager.html#JobManager.update_job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.services.job_manager.JobManager.update_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update details of a specific job.</p>
+</dd></dl>
+
+</dd></dl>
+
+<ul class="simple">
+</ul>
+</section>
+
+
+      </div>
+    <div class="container">
+      <footer class="sk-content-footer">
+            &copy; 2023, Lukasz Kowejsza.
+          Last updated on Oct 23, 2023.
+          <a href="../_sources/services/llmp.services.job_manager.JobManager.rst.txt" rel="nofollow">Show this page source</a>
+      </footer>
+    </div>
+  </div>
+</div>
+<script src="../_static/js/vendor/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    /* Add a [>>>] button on the top-right corner of code samples to hide
+     * the >>> and ... prompts and the output and thus make the code
+     * copyable. */
+    var div = $('.highlight-python .highlight,' +
+                '.highlight-python3 .highlight,' +
+                '.highlight-pycon .highlight,' +
+		'.highlight-default .highlight')
+    var pre = div.find('pre');
+
+    // get the styles from the current theme
+    pre.parent().parent().css('position', 'relative');
+    var hide_text = 'Hide prompts and outputs';
+    var show_text = 'Show prompts and outputs';
+
+    // create and add the button to all the code blocks that contain >>>
+    div.each(function(index) {
+        var jthis = $(this);
+        if (jthis.find('.gp').length > 0) {
+            var button = $('<span class="copybutton">&gt;&gt;&gt;</span>');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+            jthis.prepend(button);
+        }
+        // tracebacks (.gt) contain bare text elements that need to be
+        // wrapped in a span to work with .nextUntil() (see later)
+        jthis.find('pre:has(.gt)').contents().filter(function() {
+            return ((this.nodeType == 3) && (this.data.trim().length > 0));
+        }).wrap('<span>');
+    });
+
+    // define the behavior of the button when it's clicked
+    $('.copybutton').click(function(e){
+        e.preventDefault();
+        var button = $(this);
+        if (button.data('hidden') === 'false') {
+            // hide the code output
+            button.parent().find('.go, .gp, .gt').hide();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'hidden');
+            button.css('text-decoration', 'line-through');
+            button.attr('title', show_text);
+            button.data('hidden', 'true');
+        } else {
+            // show the code output
+            button.parent().find('.go, .gp, .gt').show();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'visible');
+            button.css('text-decoration', 'none');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+        }
+    });
+
+	/*** Add permalink buttons next to glossary terms ***/
+	$('dl.glossary > dt[id]').append(function() {
+		return ('<a class="headerlink" href="#' +
+			    this.getAttribute('id') +
+			    '" title="Permalink to this term">¶</a>');
+	});
+});
+
+</script>
+    
+</body>
+</html>

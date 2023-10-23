@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>llmp.components.example_manager.ExampleManager &mdash; LLMP 0.0.2</title>
+  
+  <link rel="canonical" href="https://api.python.llmp.com/en/latest/components/llmp.components.example_manager.ExampleManager.html" />
+
+  
+
+  <link rel="stylesheet" href="../_static/css/vendor/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+<script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+<script src="../_static/jquery.js"></script> 
+</head>
+<body>
+
+
+<nav id="navbar" class="sk-docs-navbar navbar navbar-expand-md navbar-light bg-light py-0">
+  <div class="container-fluid sk-docs-container px-0">
+    <button
+      id="sk-navbar-toggler"
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="sk-navbar-collapse collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../api_reference.html">API</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" href="../experimental_api_reference.html">Experimental</a>
+        </li>
+        <li class="nav-item">
+          <a class="sk-nav-link nav-link" target="_blank" rel="noopener noreferrer" href="https://python.lllmp.com/">Python Docs</a>
+        </li>
+      </ul>
+      <div id="searchbox" role="search">
+          <div class="searchformwrapper">
+          <form class="search" action="../search.html" method="get">
+            <input class="sk-search-text-input" type="text" name="q" aria-labelledby="searchlabel" />
+            <input class="sk-search-text-btn" type="submit" value="Go" />
+          </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="d-flex" id="sk-doc-wrapper">
+    <input type="checkbox" name="sk-toggle-checkbox" id="sk-toggle-checkbox">
+    <label id="sk-sidemenu-toggle" class="sk-btn-toggle-toc btn sk-btn-primary" for="sk-toggle-checkbox">Toggle Menu</label>
+    <div id="sk-sidebar-wrapper" class="border-right">
+      <div class="sk-sidebar-toc-wrapper">
+        <div class="btn-group w-100 mb-2" role="group" aria-label="rellinks">
+            <a href="llmp.components.evaluation.engine.EvaluationEngine.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp.components.evaluation.engine.EvaluationEngine">Prev</a><a href="../api_reference.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp API Reference">Up</a>
+            <a href="llmp.components.generator.concurrent.AsyncGenerator.html" role="button" class="btn sk-btn-rellink py-1" sk-rellink-tooltip="llmp.components.generator.concurrent.AsyncGenerator">Next</a>
+        </div>
+        <div class="alert alert-warning p-1 mb-2" role="alert">
+          <p class="text-center mb-0">
+          <strong>LLMP 0.0.2</strong><br/>
+          </p>
+        </div>
+            <div class="sk-sidebar-toc">
+              <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">llmp.components.example_manager</span></code>.ExampleManager</a></li>
+</ul>
+
+            </div>
+      </div>
+    </div>
+    <div id="sk-page-content-wrapper">
+      <div class="sk-page-content container-fluid body px-md-3" role="main">
+        
+  <section id="llmp-components-example-manager-examplemanager">
+<h1><a class="reference internal" href="../api_reference.html#module-llmp.components.example_manager" title="llmp.components.example_manager"><code class="xref py py-mod docutils literal notranslate"><span class="pre">llmp.components.example_manager</span></code></a>.ExampleManager<a class="headerlink" href="#llmp-components-example-manager-examplemanager" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">llmp.components.example_manager.</span></span><span class="sig-name descname"><span class="pre">ExampleManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example Manager for a given job.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.fill_examples">
+<span class="sig-name descname"><span class="pre">fill_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.fill_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.fill_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the example records for a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.create_examples">
+<span class="sig-name descname"><span class="pre">create_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.create_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.create_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a given number of examples for a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.add_example">
+<span class="sig-name descname"><span class="pre">add_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.add_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.add_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a single example to a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.get_examples">
+<span class="sig-name descname"><span class="pre">get_examples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.get_examples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all examples for a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.delete_example">
+<span class="sig-name descname"><span class="pre">delete_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.delete_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.delete_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a single example from a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.update_example">
+<span class="sig-name descname"><span class="pre">update_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.update_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.update_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a single example for a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.to_engine">
+<span class="sig-name descname"><span class="pre">to_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.to_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.to_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the example records to an ExampleManagerSelector.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.get_test_set">
+<span class="sig-name descname"><span class="pre">get_test_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_test_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.get_test_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a test set of examples for a given job.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.get_possible_sets">
+<span class="sig-name descname"><span class="pre">get_possible_sets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_possible_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.get_possible_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all possible sets of examples for a given job.</p>
+</dd></dl>
+
+<p>Initialize the ExampleManager with a job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job</strong> (<a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><em>JobRecord</em></a>) – The job to manage the examples for.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable debug mode. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">records</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#llmp.components.example_manager.ExampleManager.__init__" title="llmp.components.example_manager.ExampleManager.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(job[, debug])</p></td>
+<td><p>Initialize the ExampleManager with a job.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="llmp.components.example_manager.ExampleManager.add_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_example</span></code></a>(record, **kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id1" title="llmp.components.example_manager.ExampleManager.create_examples"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_examples</span></code></a>([num_examples])</p></td>
+<td><p>Create a given number of examples for a given job.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id2" title="llmp.components.example_manager.ExampleManager.delete_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_example</span></code></a>(job_id, example_idx)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id3" title="llmp.components.example_manager.ExampleManager.fill_examples"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_examples</span></code></a>([total_count])</p></td>
+<td><p>Fill the example records for a given job.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id4" title="llmp.components.example_manager.ExampleManager.get_examples"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_examples</span></code></a>(job_id)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id5" title="llmp.components.example_manager.ExampleManager.get_possible_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_possible_sets</span></code></a>(set_size[, exclude_ids])</p></td>
+<td><p>Return all possible sets of examples.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id6" title="llmp.components.example_manager.ExampleManager.get_test_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_test_set</span></code></a>(test_size[, mode, exclude_ids])</p></td>
+<td><p>Return a test set of examples.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id7" title="llmp.components.example_manager.ExampleManager.to_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_engine</span></code></a>(job_id)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id8" title="llmp.components.example_manager.ExampleManager.update_example"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_example</span></code></a>(job_id, example_idx, example)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="llmp.components.example_manager.ExampleManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><span class="pre">JobRecord</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#llmp.components.example_manager.ExampleManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the ExampleManager with a job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job</strong> (<a class="reference internal" href="../data_model/llmp.data_model.job_record.JobRecord.html#llmp.data_model.job_record.JobRecord" title="llmp.data_model.job_record.JobRecord"><em>JobRecord</em></a>) – The job to manage the examples for.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>optional</em>) – Enable debug mode. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">add_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data_model/llmp.data_model.example_record.ExampleRecord.html#llmp.data_model.example_record.ExampleRecord" title="llmp.data_model.example_record.ExampleRecord"><span class="pre">ExampleRecord</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.add_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">create_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_examples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.create_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a given number of examples for a given job.</p>
+<p>Created examples are added to the job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_examples</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of examples to create. Defaults to 20.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to ExampleGenerator.generate().</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span> <span class="o">=</span> <span class="n">ExampleManager</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">manager</span><span class="o">.</span><span class="n">create_examples</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">delete_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UUID4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.delete_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">fill_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.fill_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the example records for a given job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>total_count</strong> (<em>int</em><em>, </em><em>optional</em>) – The total number of examples to create. Defaults to 20.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to self.create_examples().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">get_examples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UUID4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_examples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">get_possible_sets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data_model/llmp.data_model.example_record.ExampleRecord.html#llmp.data_model.example_record.ExampleRecord" title="llmp.data_model.example_record.ExampleRecord"><span class="pre">llmp.data_model.example_record.ExampleRecord</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_possible_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all possible sets of examples.</p>
+<p>Is used in ExampleOptimizer to test all possible combinations of existing examples for a given set_size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>set_size</strong> (<em>int</em>) – The size of the sets.</p></li>
+<li><p><strong>exclude_ids</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – A list of example ids to exclude. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of example records.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[tuple[<a class="reference internal" href="../data_model/llmp.data_model.example_record.ExampleRecord.html#llmp.data_model.example_record.ExampleRecord" title="llmp.data_model.example_record.ExampleRecord">ExampleRecord</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">get_test_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">TestSetMode.RANDOM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data_model/llmp.data_model.example_record.ExampleRecord.html#llmp.data_model.example_record.ExampleRecord" title="llmp.data_model.example_record.ExampleRecord"><span class="pre">llmp.data_model.example_record.ExampleRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.get_test_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a test set of examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">to_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UUID4</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.to_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">update_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UUID4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/llmp/components/example_manager.html#ExampleManager.update_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<ul class="simple">
+</ul>
+</section>
+
+
+      </div>
+    <div class="container">
+      <footer class="sk-content-footer">
+            &copy; 2023, Lukasz Kowejsza.
+          Last updated on Oct 23, 2023.
+          <a href="../_sources/components/llmp.components.example_manager.ExampleManager.rst.txt" rel="nofollow">Show this page source</a>
+      </footer>
+    </div>
+  </div>
+</div>
+<script src="../_static/js/vendor/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+    /* Add a [>>>] button on the top-right corner of code samples to hide
+     * the >>> and ... prompts and the output and thus make the code
+     * copyable. */
+    var div = $('.highlight-python .highlight,' +
+                '.highlight-python3 .highlight,' +
+                '.highlight-pycon .highlight,' +
+		'.highlight-default .highlight')
+    var pre = div.find('pre');
+
+    // get the styles from the current theme
+    pre.parent().parent().css('position', 'relative');
+    var hide_text = 'Hide prompts and outputs';
+    var show_text = 'Show prompts and outputs';
+
+    // create and add the button to all the code blocks that contain >>>
+    div.each(function(index) {
+        var jthis = $(this);
+        if (jthis.find('.gp').length > 0) {
+            var button = $('<span class="copybutton">&gt;&gt;&gt;</span>');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+            jthis.prepend(button);
+        }
+        // tracebacks (.gt) contain bare text elements that need to be
+        // wrapped in a span to work with .nextUntil() (see later)
+        jthis.find('pre:has(.gt)').contents().filter(function() {
+            return ((this.nodeType == 3) && (this.data.trim().length > 0));
+        }).wrap('<span>');
+    });
+
+    // define the behavior of the button when it's clicked
+    $('.copybutton').click(function(e){
+        e.preventDefault();
+        var button = $(this);
+        if (button.data('hidden') === 'false') {
+            // hide the code output
+            button.parent().find('.go, .gp, .gt').hide();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'hidden');
+            button.css('text-decoration', 'line-through');
+            button.attr('title', show_text);
+            button.data('hidden', 'true');
+        } else {
+            // show the code output
+            button.parent().find('.go, .gp, .gt').show();
+            button.next('pre').find('.gt').nextUntil('.gp, .go').css('visibility', 'visible');
+            button.css('text-decoration', 'none');
+            button.attr('title', hide_text);
+            button.data('hidden', 'false');
+        }
+    });
+
+	/*** Add permalink buttons next to glossary terms ***/
+	$('dl.glossary > dt[id]').append(function() {
+		return ('<a class="headerlink" href="#' +
+			    this.getAttribute('id') +
+			    '" title="Permalink to this term">¶</a>');
+	});
+});
+
+</script>
+    
+</body>
+</html>

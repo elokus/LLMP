@@ -1,5 +1,5 @@
 from structgenie.base import BaseExampleSelector
-from structgenie.examples.base import Example
+from structgenie.components.examples.base import Example
 
 
 class ExampleManagerSelector(BaseExampleSelector):

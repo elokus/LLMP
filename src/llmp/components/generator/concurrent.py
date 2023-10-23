@@ -7,11 +7,6 @@ Concurrent Generators
 Used in evaluation of prompt variants and optimization of prompts.
 Basically, we want to create multiple variants of a prompt and run them in multiple threads, where each thread will run
 the same prompt multiple times.
-
-We need to decide how to handle prompt variants. Should we create a new job for each prompt variant?
-The preferred logic will be to pass a single job and a list of settings for the prompt variants.
-This settings should include an instruction and a list of example ids that will be used for the generation.
-
 """
 import asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -27,8 +22,18 @@ from llmp.integration.structgenie import AsyncEngine
 from llmp.types import GenOutput
 
 
+# We need to decide how to handle prompt variants. Should we create a new job for each prompt variant?
+# The preferred logic will be to pass a single job and a list of settings for the prompt variants.
+# This settings should include an instruction and a list of example ids that will be used for the generation.
+
+
 class AsyncGenerator(BaseGenerator):
-    """Generates a job within one thread multiple times."""
+    """Generates a job multiple times asynchronous.
+
+    Methods:
+        generate: generate an output based on the job + job_setting and input data.
+        run_engines (async): run the engines in parallel with identical job setup. This is an async method so it can be used with asyncio.gather()
+    """
 
     def __init__(self, job: JobRecord, job_settings: dict = None, num_runs: int = 5, **kwargs):
         """Initialize the generator with a job and job settings.
