@@ -19,5 +19,7 @@
 !docs/api_reference/templates/
 !docs/api_reference/themes/
 docs/build
-docs/source/_static
-docs/source/_templates
+docs/docs/_static
+docs/docs/_templates
+/docs/make.bat
+/docs/Makefile
