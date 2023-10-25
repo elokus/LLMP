@@ -19,6 +19,11 @@
 !docs/api_reference/_static/
 !docs/api_reference/templates/
 !docs/api_reference/themes/
+!docs/api_reference/conf.py
+!docs/api_reference/index.rst
+!docs/api_reference/doc_links.json
+!docs/api_reference/create_api_rst.py
+!docs/api_reference/make.bat
 docs/build
 docs/docs/_static
 docs/docs/_templates
