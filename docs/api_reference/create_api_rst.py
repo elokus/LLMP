@@ -161,7 +161,7 @@ def _load_package_modules(
             continue
 
         # Get the full namespace of the module
-        namespace = str(relative_module_name).replace(".py", "").replace("/", ".").replace("\\", ".")
+        namespace = str(relative_module_name).replace(".py", "").replace("/", ".")  # windows: .replace("\\", ".")
         # Keep only the top level namespace
         top_namespace = namespace.split(".")[0]
 
