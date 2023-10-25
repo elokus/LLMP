@@ -287,8 +287,6 @@ def _document_llmp() -> None:
 
     # Add additional packages
     components = _load_package_modules(PKG_DIR, "components")
-    print(components)
-
 
     llmp_members.update(
         {
