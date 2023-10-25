@@ -32,19 +32,6 @@ from llmp.types import TestSetMode, EventType
 
 
 class ExampleManager(BaseExampleManager):
-    """Example Manager for a given job.
-
-    Methods:
-        fill_examples: Fill the example records for a given job.
-        create_examples: Create a given number of examples for a given job.
-        add_example: Add a single example to a given job.
-        get_examples: Get all examples for a given job.
-        delete_example: Delete a single example from a given job.
-        update_example: Update a single example for a given job.
-        to_engine: Convert the example records to an ExampleManagerSelector.
-        get_test_set: Get a test set of examples for a given job.
-        get_possible_sets: Get all possible sets of examples for a given job.
-    """
 
     def __init__(self, job: JobRecord, debug: bool = False):
         """Initialize the ExampleManager with a job.
@@ -94,19 +81,54 @@ class ExampleManager(BaseExampleManager):
             self.job.add_example(example)
 
     def add_example(self, record: ExampleRecord, **kwargs) -> None:
+        """Add an example to the job.
+
+        Args:
+            record (ExampleRecord): The example to add.
+            **kwargs: Additional keyword arguments passed to self.job.add_example().
+        """
         self.job.add_example(record)
 
 
     def get_examples(self, job_id: UUID4) -> list[dict]:
+        """Return all examples for a given job.
+
+        Args:
+            job_id (UUID4): The job id.
+        Returns:
+            list[dict]: A list of example records.
+        """
         pass
 
     def delete_example(self, job_id: UUID4, example_idx: int) -> None:
+        """Delete an example from a given job.
+
+        Args:
+            job_id (UUID4): The job id.
+            example_idx (int): The example index.
+        """
         pass
 
     def update_example(self, job_id: UUID4, example_idx: int, example: dict) -> None:
+        """Update an example for a given job.
+
+        Args:
+            job_id (UUID4): The job id.
+            example_idx (int): The example index.
+            example (dict): The example to update.
+        """
+
         pass
 
     def to_engine(self, job_id: UUID4) -> list[dict]:
+        """Return a list of examples for a given job.
+
+        Args:
+            job_id (UUID4): The job id.
+        Returns:
+            list[dict]: A list of example records.
+        """
+
         return ExampleManagerSelector(examples=self.records)
 
     def get_test_set(self, test_size: int, mode: str = TestSetMode.RANDOM, exclude_ids: list[str] = None) -> list[ExampleRecord]:
