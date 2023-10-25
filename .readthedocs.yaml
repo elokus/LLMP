@@ -1,4 +1,3 @@
-# .readthedocs.yaml
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
@@ -10,13 +9,24 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
+  commands:
+      - python -mvirtualenv $READTHEDOCS_VIRTUALENV_PATH
+      - python -m pip install --upgrade --no-cache-dir pip setuptools
+      - python -m pip install --upgrade --no-cache-dir sphinx readthedocs-sphinx-ext
+      - python -m pip install --exists-action=w --no-cache-dir -r docs/requirements.txt
+      - python docs/api_reference/create_api_rst.py
+      - cat docs/api_reference/conf.py
+      - python -m sphinx -T -E -b html -d _build/doctrees -c docs/api_reference docs/api_reference $READTHEDOCS_OUTPUT/html -j auto
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
-  configuration: docs/api_reference/conf.py
+   configuration: docs/api_reference/conf.py
 
-# We recommend specifying your dependencies to enable reproducible builds:
-# https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+# If using Sphinx, optionally build your docs in additional formats such as PDF
+# formats:
+#    - pdf
+
+# Optionally declare the Python requirements required to build your docs
 python:
- install:
- - requirements: docs/requirements.txt
+   install:
+   - requirements: docs/requirements.txt

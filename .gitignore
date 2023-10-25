@@ -13,6 +13,7 @@
 /docs/.cache-loader/
 /docs/_dist
 /docs/api_reference/_build
+/docs/api_reference/*
 !docs/api_reference/_static/
 !docs/api_reference/templates/
 !docs/api_reference/themes/
