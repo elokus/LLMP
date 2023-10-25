@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyllmp"
-version = "0.0.2"
+version = "0.0.3"
 description = "large language model Programming - Type safe structured generation"
 license = "MIT"
 authors = ["elokow <lukas.kowejsza@gmail.com>"]
