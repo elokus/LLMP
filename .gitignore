@@ -24,6 +24,7 @@
 !docs/api_reference/doc_links.json
 !docs/api_reference/create_api_rst.py
 !docs/api_reference/make.bat
+!docs/api_reference/Makefile
 docs/build
 docs/docs/_static
 docs/docs/_templates
