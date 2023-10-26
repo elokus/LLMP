@@ -12,6 +12,7 @@
 /docs/.docusaurus/
 /docs/.cache-loader/
 /docs/_dist
+# docs/api_reference
 /docs/api_reference/_build
 /docs/api_reference/*
 /docs/api_reference/api_reference.rst
@@ -25,6 +26,10 @@
 !docs/api_reference/create_api_rst.py
 !docs/api_reference/make.bat
 !docs/api_reference/Makefile
+
+# docs/llmp-docs
+/docs/llmp-docs/_build
+
 docs/build
 docs/docs/_static
 docs/docs/_templates
