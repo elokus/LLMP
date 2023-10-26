@@ -20,5 +20,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # generated md files
-/docs/*.md
+*.md
 .local_build.sh
