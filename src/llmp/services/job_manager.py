@@ -56,6 +56,9 @@ class JobManager:
             job.instruction = self.generate_instruction(job, **kwargs)
             self.job_storage.update_job(job)
 
+        # save job
+        self.job_storage.update_job(job)
+
         return job
 
     def get_job(self, signature: str) -> JobRecord:
