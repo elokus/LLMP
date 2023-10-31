@@ -9,6 +9,12 @@ LLMP provides a high-level abstraction for creating, storing, and optimizing gen
 - **Metrics Collection**: Evaluate the performance of prompts in terms of accuracy, efficiency, and cost.
 - **Storage Management**: Jobs are organized and stored systematically for easy retrieval and management.
 
+
+## Documentation and Examples
+
+For detailed documentation and examples, please refer to the:
+ - Full documentation: [project documentation](https://llmp.readthedocs.io/en/latest/api_reference.html).
+ - API Reference: [API reference](https://llmp.readthedocs.io/en/latest/api_reference.html).
 ## Quick Start
 
 ### Installation

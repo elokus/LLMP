@@ -108,7 +108,7 @@ class Program:
             generator_type = "consensus"
 
         output, run_metrics = self.job_manager.generate_output(
-            self.job, input_data, generator_type=generator_type, return_metrics=return_metrics, **kwargs
+            self.job, input_data, generator_type=generator_type, **kwargs
         )
 
         if is_first_run:

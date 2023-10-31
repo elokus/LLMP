@@ -1,0 +1,49 @@
+---
+title: Optimizer
+sidebar_position: 4
+---
+# Optimizer
+
+## **LLMP Optimizer Component Overview**
+
+The Optimizer component in LLMP is focused on refining the performance of jobs by adjusting various parameters, such as instructions and examples. These optimizers can be vital in enhancing the efficiency and accuracy of generation tasks.
+
+### **1. General Optimizer**
+
+The basic `Optimizer` serves as the foundational optimization tool for a given job. It provides a platform to experiment with various settings and strategies to improve performance.
+
+### **2. Instruction Optimizer**
+
+The `InstructionOptimizer` is specifically tailored to improve the instructions for a given job. Instructions are crucial as they guide the generation process:
+
+- **Functionality:** It evaluates a set of examples against varied instructions and returns the most effective instruction.
+
+- **Attributes:** Parameters like `INSTRUCTION_TEST_SIZE`, `MIN_EXAMPLES`, `PROMPT_SAMPLE_SIZE`, `RUN_PER_SAMPLE`, `SELECT_MODE`, and `TEST_SIZE` provide a framework for the optimization process. The `test_set_ids` keeps track of the set of examples used in the optimization process.
+
+- **Methods:**
+  - `optimize`: The core function, designed to refine both prompts and examples for a job.
+  - `prepare_job`: Prepares the settings for optimization.
+  - Auxiliary methods like `evaluate`, `examples_to_prompt`, and `get_progress_bar` aid in the optimization process by evaluating job settings, converting examples to prompts, and visually displaying the progress, respectively.
+
+### **3. Example Optimizer**
+
+The `ExampleOptimizer` focuses on refining the examples used for a given job:
+
+- **Functionality:** It tailors the examples to best match the requirements of the job, ensuring better results in the generation process.
+
+- **Attributes:** Like the Instruction Optimizer, it possesses attributes such as `INSTRUCTION_TEST_SIZE`, `MIN_EXAMPLES`, `PROMPT_SAMPLE_SIZE`, `RUN_PER_SAMPLE`, `SELECT_MODE`, `TEST_SIZE`, and `test_set_ids`. Other attributes include display configurations like `display_progress`, `progress_bar_config`, and a debugging toggle `debug`.
+
+- **Methods:**
+  - `optimize`: The main function, refining both prompts and examples for a job.
+  - `prepare_job`: Pre-set the job's parameters for optimization.
+  - Supplementary methods like `evaluate`, `examples_to_prompt`, and `get_progress_bar` function similarly to the ones in the Instruction Optimizer.
+
+## **Key Takeaways**
+
+- The Optimizer component in LLMP plays a pivotal role in enhancing job performance by fine-tuning instructions and examples.
+
+- Different optimizers cater to specific requirements, ensuring both the guiding instructions and the examples used are as efficient as possible.
+
+- The optimization process is flexible, allowing for experimentation and adjustments based on the attributes and methods provided.
+
+With this framework, users can leverage the power of LLMP's optimization capabilities to refine their jobs and achieve the best results.

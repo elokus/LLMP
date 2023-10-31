@@ -1,0 +1,57 @@
+---
+sidebar_position: 3
+---
+
+# Generator
+
+Alright, let's break down the generator component in the LLMP system. This component essentially allows for various methods of generation based on the job and input data. The methods range from simple, single-threaded executions to more complex, multi-threaded and asynchronous operations. 
+
+## **LLMP Generator Component Overview**
+
+The Generator module within LLMP is designed to execute generation tasks given a specific job and input object. There are several classes provided for various generation requirements:
+
+### **1. Basic Generator**
+
+- **Class:** `components.generator.simple.Generator(job[, ...])`
+  
+- **Description:** This is the most straightforward generator. It simply runs a given job once and returns the result. It's best suited for tasks that don't require repetitive or concurrent generation.
+
+### **2. Asynchronous Generators**
+
+Asynchronous Generators are designed to execute jobs without waiting for other tasks to complete, which can lead to performance improvements:
+
+- **Class:** `components.generator.concurrent.AsyncGenerator(job)`
+  
+- **Description:** Generates a given job multiple times asynchronously.
+
+- **Class:** `components.generator.concurrent.SequentialAsyncGenerator(job)`
+  
+- **Description:** Executes a generation job within a single thread but can handle multiple inputs in sequence.
+
+- **Class:** `components.generator.concurrent.SequentialAsyncGenerator2(job)`
+  
+- **Description:** An optimized version of the SequentialAsyncGenerator, aiming to be faster.
+
+- **Class:** `components.generator.concurrent.MultiThreadingAsyncGenerator(...)`
+  
+- **Description:** Enhances the SequentialAsyncGenerator by running it across multiple threads. This method can lead to significant performance gains if the system supports multi-threading and the job can be parallelized.
+
+### **3. Consensus-Based Generator**
+
+- **Class:** `components.generator.consensus.MajorVoteGenerator(job)`
+  
+- **Description:** This generator runs a job with a specific input multiple times and then returns the "majority vote" output. It's beneficial when there's a need for consensus or validation in the generation result.
+
+### **4. Example Generator**
+
+- **Class:** `components.generator.examples.ExampleGenerator(job)`
+  
+- **Description:** Tailored specifically for generating examples for a given job. It's an essential tool in the LLMP to create reference samples or test outputs.
+
+## **Key Takeaways**
+
+- The generator component in LLMP provides a range of tools to execute generation tasks, catering to various requirements from simple to more complex, consensus-driven, or example-focused outputs.
+  
+- Asynchronous and multi-threaded methods are available for improved performance on suitable hardware and for jobs that can be parallelized.
+
+This overview provides a broad understanding of the Generator component within LLMP. Depending on the specific task and performance requirements, users can select an appropriate generator class for their needs.

@@ -1,0 +1,8 @@
+{
+  "label": "Get Started",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Dive into the foundational steps to kickstart your journey with the LLMP framework. This section offers a hands-on introduction, guiding you through the initial setup, your first LLMP job creation, and essential concepts. Ideal for both newcomers and those seeking a quick refresher."
+  }
+}

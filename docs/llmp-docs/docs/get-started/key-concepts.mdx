@@ -1,0 +1,42 @@
+---
+title: Key Concepts
+sidebar_position: 2
+---
+
+# Key Concepts
+
+## Job
+A "Job" in the LLMP framework serves as a structured representation of a specific language model task. At its core, a Job captures the essential attributes like its unique identifier, version, state, and more. It holds a clear definition of both input and output models, ensuring that tasks are executed within predefined parameters. Additionally, a Job keeps track of its history through version histories, action logs, and generation logs, allowing developers to trace its evolution and maintain consistency across different iterations. Its design facilitates swift integration into a project, minimizing interruptions and streamlining the development flow.
+[Learn more about Job](modules/job/key-concept.mdx)
+
+## Example
+"Examples" play a pivotal role in the LLMP ecosystem, functioning as the primary data source to enhance the reliability and accuracy of language model generations. Each example consists of a specific input-output pair, adhering to the models defined in their respective Job. While they are instrumental in crafting optimal prompts, their significance extends further. Examples underpin the automatic prompt generation mechanism, where the system reverse engineers task instructions based on provided examples. Furthermore, they are integral to the optimization process, assisting in generating new examples and testing various combinations to identify the most effective prompt setup. Given their centrality in the system, it's imperative to ensure that examples are accurate and reliable, especially since synthetic generation can introduce discrepancies.
+[Learn more about Example](modules/example/key-concept.mdx)
+
+## Generator
+
+The **Generator** module in LLMP is a crucial component designed to execute generation tasks. Different types of generators are available to cater to a range of requirements, whether it's a straightforward generation or more advanced asynchronous, multi-threaded operations. Some of the notable types of generators are:
+
+- **AsyncGenerator**: Generates a job multiple times asynchronously.
+
+- **MultiThreadingAsyncGenerator**: Runs SequentialAsyncGenerator using multiple threads.
+
+- **MajorVoteGenerator**: Executes a job multiple times for a particular input, returning the most frequent output.
+
+- **ExampleGenerator**: Tailored to create examples for specific jobs.
+
+These generators ensure that every task is executed efficiently, based on the nature of the job and the inputs provided, ultimately producing reliable outputs.
+
+[Learn more about Generator](modules/components/generator.mdx)
+
+### Optimizer
+
+The **Optimizer** module is central to enhancing the quality and reliability of the generation tasks in LLMP. Optimizers focus on refining either the instructions or the examples of a job to ensure optimal performance:
+
+- **InstructionOptimizer**: Tailored for optimizing the instructions of a job. It runs a test set of examples against varying instructions to deduce the most effective one.
+
+- **ExampleOptimizer**: Specializes in optimizing the examples for a job. Its main objective is to find the best set of examples that can guide the generation to produce accurate and consistent results.
+
+Both types of optimizers work iteratively, assessing the efficacy of instructions or examples, and making adjustments as necessary. The end goal is to maximize the accuracy and reliability of the generation tasks, ensuring that the LLMP system produces the best possible results.
+
+[Learn more about Optimizer](modules/components/optimizer.mdx)

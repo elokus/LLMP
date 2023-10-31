@@ -1,0 +1,40 @@
+---
+title: Data Model - JobRecord
+sidebar_position: 2
+---
+
+# JobRecord
+
+## Introduction
+
+The LLMP (Language Model Management Platform) is akin to a well-orchestrated symphony, where each part harmoniously contributes to a unified goal. At the heart of this symphony is the `JobRecord`. It doesn't just store information about a job; it embodies the essence of what a job means in the LLMP universe, ensuring that each job is executed with precision, reliability, and traceability.
+
+## Why It Matters
+
+Consider an intricate timepiece. Each cog and gear must be meticulously designed and placed for accurate timekeeping. Similarly, in LLMP, a job is a vital cog. The `JobRecord` ensures that each cog—each job—is accurate, efficient, and most importantly, serves its intended purpose.
+
+## Key Features
+
+- **Integrated Understanding**: Through attributes like `input_model` and `output_model`, the record provides a comprehensive understanding of what goes into a job and what is expected out of it.
+
+- **Reliability and Precision**: With the `validation_script` and `test_input`, it ensures that every job is not only reliable but also precise in its execution.
+
+- **Dynamic Traceability**: Attributes such as `creation_event_id` and `update_event_id` guarantee that the life cycle of a job, from inception to any modifications, is always traceable.
+
+- **Interactive Engagement**: The inclusion of methods like `to_string` and `update` emphasizes that this isn't just a passive record but an active participant in the job's lifecycle.
+
+## Deep Dive: Attributes
+
+- **status**: Provides a real-time update on where the job stands, be it 'active', 'paused', or 'completed', ensuring timely insights.
+
+- **prompt**: At the core, it defines the task instruction, guiding the language model in its operations.
+
+- **job_type**: Categorizes the job, allowing for streamlined operations and better management.
+
+- **metadata**: A reservoir of additional information, ensuring that every nuanced detail of the job is captured and accessible.
+
+## Beyond Technicalities: The Bigger Picture
+
+The `JobRecord` is a testament to the LLMP's commitment to operational excellence. It doesn't just store data—it defines, refines, and oversees the entire life cycle of a job. By offering a detailed yet intuitive interface, it solidifies the foundation on which the LLMP operates, ensuring consistency, reliability, and excellence.
+
+For further details, developers can explore the [API references](https://llmp.readthedocs.io/en/latest/data_model/llmp.data_model.job_record.JobRecord.html) directly.

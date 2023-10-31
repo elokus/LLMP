@@ -4,7 +4,7 @@ from llmp.components.job_factory import job_factory
 from llmp.components.instruction.generation import InstructionGenerator
 from llmp.data_model.events import Event
 from llmp.services.job_storage import JobStorage
-from llmp.components.generator import Generator
+from llmp.components.generator import Generator, MajorVoteGenerator
 from llmp.data_model import JobRecord, ExampleRecord
 from llmp.types import EventType
 
@@ -14,7 +14,7 @@ def load_generator_cls(generator_type: str):
     if generator_type == "default":
         return Generator
     elif generator_type == "consensus":
-        raise NotImplementedError
+        raise MajorVoteGenerator
     elif generator_type == "async":
         raise NotImplementedError
     else:

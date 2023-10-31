@@ -1,0 +1,35 @@
+---
+title: Key Concepts
+sidebar_position: 1
+---
+
+**Key Concepts: Job**
+
+### Overview:
+
+In the realm of LLMP, a "Job" signifies a distinct task or operation to be performed. It's an encapsulation of a set of instructions, examples, and associated data, managed through the system to produce desired outputs. A job is the primary entity that users interact with, effectively communicating their requirements to the LLMP system.
+
+### What makes up a Job:
+
+1. **Definition**:
+    - Before a job starts, it needs a clear definition. This includes what the job aims to achieve, its input and expected output structure, and any specific instructions that the LLM should follow.
+
+2. **Lifecycle**:
+    - A job has a lifecycle that begins with its creation and ends with its completion. During this lifecycle, the job can undergo modifications, can be paused, or even terminated based on the user's needs.
+
+3. **Versioning**:
+    - As the system or user's requirements evolve, so do the jobs. To accommodate this, jobs in LLMP support versioning. This means any significant changes to a job can be tracked with version numbers, allowing users to rollback or reference specific versions if needed.
+
+4. **Logs & Metrics**:
+    - Keeping track of a job's progress, successes, and failures is crucial. LLMP maintains logs associated with each job and may also generate metrics to provide insights into the job's performance and outcomes.
+
+5. **Templates & Records**:
+    - Jobs in LLMP are structured using templates that standardize their format and make them reusable. As jobs are executed, records of their activity, such as the `JobRecord`, are maintained, offering detailed insights into each job's attributes and history.
+
+### Why "Job" is Central to LLMP:
+
+Jobs are the interface between the user and the LLMP system. They take abstract requirements and convert them into actionable tasks within the system. Understanding the concept of a job and its intricacies is pivotal for anyone aiming to make the most of LLMP.
+
+In the following sections, we will dive deeper into specific components related to Jobs, such as the `JobRecord`, to further explore their structures and functionalities.
+
+[Explore JobRecord >](key-concepts/job/job-record)

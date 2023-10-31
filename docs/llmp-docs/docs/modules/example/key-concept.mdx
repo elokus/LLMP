@@ -1,0 +1,28 @@
+---
+title: Key Concept
+sidebar_position: 1
+---
+
+### Modules: Example
+
+**Introduction**
+
+The `Example` module is foundational in LLMP. At its core, an example provides a sample input-output pair adhering to the `input` and `output` models of a given job. The significance of examples is multifaceted, serving pivotal roles in prompt generation, optimization, and error control.
+
+**Primary Function: Reliability through Prompt Generation**
+
+The primary function of an example is to amplify the reliability of generation tasks. By integrating examples into the final prompt, the risk of ambiguous or inaccurate outputs is significantly diminished. Essentially, every generative output associated with an input can function as an example, so long as both adhere to the specified `input` and `output` models of the job.
+
+**Secondary Role: Automatic Prompt Generation**
+
+Automated prompt creation is another crucial function of examples. By providing even a single example, LLMP can reverse engineer the task instruction, input, and output models, streamlining the task definition process. This capability not only enhances the reliability of the tasks but also ensures prompt consistency.
+
+**Tertiary Utility: Example Optimization**
+
+Beyond the above, examples are instrumental in the optimization unit. The Example Optimization process begins by generating new examples until there are at least 20 for a specific job. Subsequently, different combinations of these examples are tested, resulting in an optimized prompt setup comprising 2-6 examples. The exact number depends on the length and complexity of each example. The goal is to achieve the most reliable and accurate outputs for a job.
+
+**Ensuring Example Reliability**
+
+Given the pivotal role of examples, maintaining their reliability is paramount. LLMP synthesizes many examples, but this process has inherent risks, including the potential for error propagation. For intricate tasks or in scenarios with increased complexity, supplying additional examples or revisiting the generation log periodically is advised. This enables a review of the outputs, and if necessary, an optimization run can be executed with revised examples extracted from the generation log.
+
+Examples, by design and intent, are a cornerstone of LLMP. Ensuring their reliability and accuracy ensures the robustness of the entire LLMP framework.

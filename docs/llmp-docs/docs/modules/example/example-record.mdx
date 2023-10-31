@@ -1,0 +1,38 @@
+---
+title: Data Model - ExampleRecord
+sidebar_position: 2
+---
+
+# ExampleRecord
+
+## Introduction
+
+In the realm of the LLMP (Language Model Management Platform), every example acts as the foundation for the model's understanding. These examples aren't just raw data; they encapsulate the very logic and instructions the language models use to generate outputs. The `ExampleRecord` is a key construct ensuring that this foundation is solid, reliable, and robust. It not only maintains and validates examples but also serves as a dynamic interface for interacting with them.
+
+## Why It Matters
+
+Imagine constructing a building. If each brick isn't quality-checked or isn't consistent with the other bricks, the resulting structure can be unstable. Similarly, in LLMP, an example is a brick. The `ExampleRecord` ensures that every brick—every example—is consistent, reliable, and serves its purpose.
+
+## Key Features
+
+- **Dynamic Versioning**: With attributes like `version` and `version_history`, the record ensures that each evolution of an example is traceable, enabling rollback and understanding changes over time.
+  
+- **Reliability Scoring**: The `reliability` attribute offers an objective metric of how trustworthy an example is. This score can be pivotal in decision-making processes, especially when curating examples for training or refining models.
+
+- **Rich Interactions**: Beyond just storing data, methods like `copy`, `json`, and `dict` allow for rich interactions, making data extraction, duplication, or transformation seamless.
+
+## Deep Dive: Attributes
+
+- **data_type**: Indicates if the data is synthetic or sourced from real-world examples, providing context to its origin.
+  
+- **example**: The heart of the record, representing the input-output pair, which is the crux of any language model's understanding.
+
+- **gen_event_id**: A unique identifier, ensuring that the source or trigger of the generation can always be pinpointed.
+
+- **verification_type**: Specifies the kind of checks the example underwent, reinforcing the trust in its quality.
+
+## Beyond Technicalities: The Bigger Picture
+
+The `ExampleRecord` isn't just a data structure; it's a testament to LLMP's commitment to quality and precision. By meticulously documenting, validating, and offering interactive methods, it ensures that the core of the language model—the examples—are always of the highest standard.
+
+For further details, developers can explore the [API references](https://llmp.readthedocs.io/en/latest/data_model/llmp.data_model.example_record.ExampleRecord.html) directly.

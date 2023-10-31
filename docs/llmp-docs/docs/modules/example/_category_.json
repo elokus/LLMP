@@ -1,0 +1,8 @@
+{
+  "label": "Example",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Examples in LLMP provide sample input-output pairs to enhance generation reliability, playing a pivotal role in prompt creation, optimization, and error mitigation. Ensuring their accuracy is crucial for the integrity of the entire LLMP framework."
+  }
+}
