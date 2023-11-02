@@ -13,7 +13,7 @@ LLMP provides a high-level abstraction for creating, storing, and optimizing gen
 ## Documentation and Examples
 
 For detailed documentation and examples, please refer to the:
- - Full documentation: [project documentation](https://llmp.readthedocs.io/en/latest/api_reference.html).
+ - Full documentation: [project documentation](https://llmp.vercel.app/docs/intro).
  - API Reference: [API reference](https://llmp.readthedocs.io/en/latest/api_reference.html).
 ## Quick Start
 
