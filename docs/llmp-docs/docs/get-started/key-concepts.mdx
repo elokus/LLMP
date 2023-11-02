@@ -7,7 +7,7 @@ sidebar_position: 2
 
 ## Job
 A "Job" in the LLMP framework serves as a structured representation of a specific language model task. At its core, a Job captures the essential attributes like its unique identifier, version, state, and more. It holds a clear definition of both input and output models, ensuring that tasks are executed within predefined parameters. Additionally, a Job keeps track of its history through version histories, action logs, and generation logs, allowing developers to trace its evolution and maintain consistency across different iterations. Its design facilitates swift integration into a project, minimizing interruptions and streamlining the development flow.
-[Learn more about Job](../modules/job/key-concept.mdx)
+[Learn more about Job](../modules/job/key-concepts.mdx)
 
 ## Example
 "Examples" play a pivotal role in the LLMP ecosystem, functioning as the primary data source to enhance the reliability and accuracy of language model generations. Each example consists of a specific input-output pair, adhering to the models defined in their respective Job. While they are instrumental in crafting optimal prompts, their significance extends further. Examples underpin the automatic prompt generation mechanism, where the system reverse engineers task instructions based on provided examples. Furthermore, they are integral to the optimization process, assisting in generating new examples and testing various combinations to identify the most effective prompt setup. Given their centrality in the system, it's imperative to ensure that examples are accurate and reliable, especially since synthetic generation can introduce discrepancies.
@@ -27,7 +27,7 @@ The **Generator** module in LLMP is a crucial component designed to execute gene
 
 These generators ensure that every task is executed efficiently, based on the nature of the job and the inputs provided, ultimately producing reliable outputs.
 
-[Learn more about Generator](../modules/components/generator.mdx)
+[Learn more about Generator](../modules/generator.mdx)
 
 ### Optimizer
 
@@ -39,4 +39,4 @@ The **Optimizer** module is central to enhancing the quality and reliability of 
 
 Both types of optimizers work iteratively, assessing the efficacy of instructions or examples, and making adjustments as necessary. The end goal is to maximize the accuracy and reliability of the generation tasks, ensuring that the LLMP system produces the best possible results.
 
-[Learn more about Optimizer](../modules/components/optimizer.mdx)
+[Learn more about Optimizer](../modules/optimizer.mdx)
