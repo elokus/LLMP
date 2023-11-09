@@ -44,10 +44,14 @@ config : dict
 from pydantic import BaseModel
 from typing import Type
 
+from structgenie.components.input_output import InputModel, OutputModel
+
 from llmp.components.settings.program_settings import ProgramSettings, PromptType
 from llmp.data_model import JobRecord
 from llmp.services.job_manager import JobManager
 from llmp.utils.helper import dotdict
+from llmp.types import IOModelDefinition
+from llmp.utils.io_model import parse_input_model, parse_output_model
 
 
 class Program:
@@ -57,8 +61,8 @@ class Program:
     def __init__(
             self,
             signature: str,
-            input_model: Type[BaseModel] = None,
-            output_model: Type[BaseModel] = None,
+            input_model: IOModelDefinition = None,
+            output_model: IOModelDefinition = None,
             config: ProgramSettings = ProgramSettings(),
             load_if_exist: bool = True,
             **kwargs):
@@ -67,12 +71,10 @@ class Program:
 
         # if input_model/output_model create new Job
         if load_if_exist:
-            try:
-                self.job = self.job_manager.get_job(signature)
-                self.config = config
+            if self._load_by_signature(signature):
                 return
-            except:
-                pass
+            if self._load_by_io_model(input_model, output_model, instruction=kwargs.get("instruction", None)):
+                return
 
 
         if input_model and output_model:
@@ -118,3 +120,23 @@ class Program:
         if return_metrics:
             dotdict_output.run_metrics = run_metrics
         return dotdict_output
+
+    def _load_by_signature(self, signature: str):#
+        try:
+            self.job = self.job_manager.get_job(signature)
+            return True
+        except:
+            return False
+
+    def _load_by_io_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None):
+        try:
+            self.job = self.job_manager.get_job_by_input_output_model(input_model, output_model)
+            return True
+        except:
+            return False
+
+    def event_log(self):
+        return self.job_manager.get_event_log(self.job.idx)
+
+    def generation_log(self):
+        return self.job_manager.get_generation_log(self.job.idx)

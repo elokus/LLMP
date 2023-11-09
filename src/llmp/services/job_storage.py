@@ -30,14 +30,14 @@ class JobStorage:
         """Load a job by signature name or id.
 
         Args:
-            signature (str): The signature name or id of the job.
+            signature (str): The signature name, id or hash of the job.
         Returns:
             JobRecord: The loaded job.
         """
         if is_valid_uuid(signature):
             return self._load_job(signature)
         else:
-            return self._load_job_by_name(signature)
+            return self._load_job_from_register(signature)
 
     def update_job(self, job: JobRecord) -> None:
         self._save_job(job)
@@ -138,13 +138,13 @@ class JobStorage:
 
         return JobRecord(**metadata)
 
-    def _load_job_by_name(self, job_name: str) -> "JobRecord":
+    def _load_job_from_register(self, key: str) -> "JobRecord":
         with (Path(self.base_path) / "job_register.json").open('r') as f:
             job_names = json.load(f)
-        job_idx = job_names[job_name]
+        job_idx = job_names[key]
         return self._load_job(job_idx)
 
-    def register_job(self, job_name: str, job_idx: str) -> str:
+    def register_job(self, job_name: str, job_idx: str, io_hash: str) -> str:
         """Register a job name to a job id.
 
         If the job name already exists, append a versioning to the end of the name.
@@ -152,6 +152,7 @@ class JobStorage:
         Args:
             job_name (str): The job name to register.
             job_idx (str): The job id to register.
+            io_hash (str): The io_hash of the input and output model to register.
         Returns:
             str: The registered job name.
         """
@@ -167,6 +168,7 @@ class JobStorage:
 
         safe_name = safe_job_name(job_name, job_names.keys())
         job_names[safe_name] = job_idx
+        job_names[io_hash] = job_idx
 
         with open(str(registry_file), mode='w') as f:
             json.dump(job_names, f)

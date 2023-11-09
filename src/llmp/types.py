@@ -1,8 +1,14 @@
 from enum import Enum
-from typing import Tuple
+from typing import Tuple, Type, Union
 
+from pydantic import BaseModel
+from structgenie.components.input_output import InputModel, OutputModel
 
 GenOutput = Tuple[dict, dict]
+
+
+UnionIOModel = Union[InputModel, OutputModel]
+IOModelDefinition = Union[UnionIOModel, str, dict, Type[BaseModel]]
 
 
 class VerificationType(Enum):

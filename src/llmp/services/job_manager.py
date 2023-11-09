@@ -6,7 +6,8 @@ from llmp.data_model.events import Event
 from llmp.services.job_storage import JobStorage
 from llmp.components.generator import Generator, MajorVoteGenerator
 from llmp.data_model import JobRecord, ExampleRecord
-from llmp.types import EventType
+from llmp.types import EventType, IOModelDefinition
+from llmp.utils.io_model import hash_from_io_models
 
 
 def load_generator_cls(generator_type: str):
@@ -38,8 +39,9 @@ class JobManager:
             job_name=job_name,
             **kwargs)
 
-        # register job_name
-        _job_name = self.job_storage.register_job(job_name, job.idx)
+        # register job_name and io_hash
+        io_hash = hash_from_io_models(job.input_model, job.output_model, kwargs.get("instruction", None))
+        _job_name = self.job_storage.register_job(job_name, job.idx, io_hash)
         if job_name != _job_name:
             job.job_name = _job_name
             print(f"Job name '{job_name}' already exists. Using '{_job_name}' instead.")
@@ -92,9 +94,6 @@ class JobManager:
 
         return result, run_metrics
 
-
-
-
     def generate_instruction(self, job: JobRecord, **kwargs) -> str:
         """Generate an instruction for a specific job."""
         generator = InstructionGenerator(job, **kwargs)
@@ -116,13 +115,25 @@ class JobManager:
         """Submit an example for human verification and get the result."""
         pass
 
-    def get_job_by_input_output_model(self, input_model: str, output_model: str) -> JobRecord:
+    def get_job_by_input_output_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None) -> JobRecord:
         """Retrieve a job by input/output model."""
-        pass
+        io_hash = hash_from_io_models(input_model, output_model)
+        return self.job_storage.get_job(io_hash)
+
 
     def log_action(self, action: str, job_id: str):
         """Log a specific action related to a job."""
         pass
+
+    def get_event_log(self, job_id: str):
+        """Retrieve the event log for a specific job."""
+        job = self.job_storage.get_job(job_id)
+        return self.job_storage.load_event_log(job)
+
+    def get_generation_log(self, job_id: str):
+        """Retrieve the generation log for a specific job."""
+        job = self.job_storage.get_job(job_id)
+        return self.job_storage.load_generation_log(job)
 
     # # === Private methods ===
     #
