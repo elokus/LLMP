@@ -3,6 +3,7 @@
 /dist
 /llmp.egg-info
 /_notebooks
+/data
 
 # docs
 /docs/notebooks/data

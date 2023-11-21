@@ -11,7 +11,7 @@ from pydantic import BaseModel
 ROOT_DIR = Path(__file__).parents[2].absolute()
 HERE = Path(__file__).parent
 
-PKG_DIR = ROOT_DIR / "src" / "llmp"
+PKG_DIR = ROOT_DIR / "src" / "llmp-lib" / "llmp"
 WRITE_FILE = HERE / "api_reference.rst"
 
 ClassKind = Literal["TypedDict", "Regular", "Pydantic", "enum"]
