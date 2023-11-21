@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "pyllmp"
+version = "0.0.6"
+description = "large language model Programming - Type safe structured generation"
+license = "MIT"
+authors = ["elokow <lukas.kowejsza@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/elokus/LLMP"
+packages = [
+    { include = "llmp", from = "src" }
+]
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0"
+pydantic = ">=1.6,<2.0"
+colorama = "0.4.6"
+langchain = "^0.0.231"
+pyyaml = ">=5.3,<7.0"
+python-dotenv ="1.0.0"
+tiktoken = ">=0.3.0,<1.0"
+jsonlines ="4.0.0"
+structgenie = "^0.1.18"
+uuid = "^1.30"
+openai = "0.28.1"
+tqdm = "^4.62.3"
+
+[tools.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+pytest = "^7.4.2"
+pytest-mock = "^3.6.1"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^4.0"
+docutils = "<0.17"
+sphinx-autodoc-typehints = "^1.12"
+autodoc_pydantic = "==1.8.0"
+myst_parser = "*"
+nbsphinx = "==0.8.9"
+sphinx-autobuild = "==2021.3.14"
+sphinx_rtd_theme = "==1.0.0"
+sphinx-typlog-theme = "==0.8.0"
+sphinx-panels = "*"
+myst_nb = "*"
+sphinx_copybutton = "*"
+toml = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
