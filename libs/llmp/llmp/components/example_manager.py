@@ -75,7 +75,7 @@ class ExampleManager(BaseExampleManager):
             >>> manager = ExampleManager(job)
             >>> manager.create_examples(20)
         """
-        generator = ExampleGenerator(self.job, **kwargs)
+        generator = ExampleGenerator(self.job, debug=self.debug, **kwargs)
         examples = generator.generate(num_examples)
         for example in examples:
             self.job.add_example(example)

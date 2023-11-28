@@ -1,5 +1,5 @@
 from pathlib import Path
-from llmp.tests.resources.fixtures import job_manager, create_job_input, job_id
+from tests.resources.fixtures import job_manager, create_job_input, job_id
 
 
 def test_job_creation(job_manager, create_job_input):

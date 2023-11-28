@@ -14,6 +14,8 @@ class PromptType(str, Enum):
 
 class ProgramSettings(BaseModel):
 
+    base_path: str = "data/jobs"
+
     log_action: bool = True
     auto_optimize: bool = True
     generator_type: str = "default"

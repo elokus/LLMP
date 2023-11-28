@@ -1,6 +1,6 @@
 import pytest
-from llmp.tests.resources.fixtures import test_job
-from llmp.data_model.job_record import input_in_records, get_record_by_input
+from tests.resources.fixtures import test_job
+from llmp.data_model.job_record import (input_in_records, get_record_by_input)
 
 
 @pytest.fixture

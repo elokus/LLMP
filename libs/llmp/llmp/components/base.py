@@ -120,6 +120,7 @@ class BaseInstructionHandler(ABC):
     def __init__(self, job: JobRecord, debug: bool = False, **kwargs):
         self.job = job
         self.debug = debug
+        self.raise_errors = kwargs.get("raise_errors", False)
 
     def generate(self, *args, **kwargs):
         """Generate text based on the job and input object."""

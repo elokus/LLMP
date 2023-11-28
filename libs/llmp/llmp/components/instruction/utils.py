@@ -137,7 +137,6 @@ def generate_instruction_from_models(
         dict(
             inp_model=input_model.template_schema,
             out_model=output_model.template_schema,
-
         )
     )
 

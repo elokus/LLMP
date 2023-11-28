@@ -44,6 +44,7 @@ config : dict
 from pydantic import BaseModel
 from typing import Type
 
+from llmp.utils.signature import is_valid_uuid
 from structgenie.components.input_output import InputModel, OutputModel
 
 from llmp.components.settings.program_settings import ProgramSettings, PromptType
@@ -55,6 +56,21 @@ from llmp.utils.io_model import parse_input_model, parse_output_model
 
 
 class Program:
+    """
+    The Program class is responsible for managing a job. It provides an interface for the user to interact with the job.
+    The job can be initialized by providing an input and output model to the job constructor. If no input/output model is provided, the job is loaded from the database.
+
+    Attributes:
+        job (JobRecord): The job record associated with the Program instance.
+
+    Methods:
+        __init__(self, signature: str, input_model: IOModelDefinition = None, output_model: IOModelDefinition = None, config: ProgramSettings = ProgramSettings(), load_if_exist: bool = True, **kwargs): Initializes a Program instance.
+        __call__(self, input_data: dict, auto_optimize: bool = True, log_action: bool = True, return_metrics: bool = False, **kwargs): Generates output for a specific input.
+        _load_by_signature(self, signature: str): Attempts to load a job by its signature.
+        _load_by_io_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None): Attempts to load a job by its input and output model.
+        event_log(self): Returns the event log of the job.
+        generation_log(self): Returns the generation log of the job.
+    """
 
     job: JobRecord
 
@@ -66,8 +82,19 @@ class Program:
             config: ProgramSettings = ProgramSettings(),
             load_if_exist: bool = True,
             **kwargs):
+        """
+        Initializes a Program instance.
 
+        Args:
+            signature (str): The signature of the job.
+            input_model (IOModelDefinition, optional): The input model of the job. Defaults to None.
+            output_model (IOModelDefinition, optional): The output model of the job. Defaults to None.
+            config (ProgramSettings, optional): The configuration of the job. Defaults to ProgramSettings().
+            load_if_exist (bool, optional): If True, attempts to load a job if it exists. Defaults to True.
+            **kwargs: Additional keyword arguments.
+        """
         self.job_manager = JobManager(config.dict())
+        self.config = config
 
         # if input_model/output_model create new Job
         if load_if_exist:
@@ -89,7 +116,7 @@ class Program:
         else:
             self.job = self.job_manager.get_job(signature)
 
-        self.config = config
+
 
     def __call__(
             self,
@@ -121,9 +148,12 @@ class Program:
             dotdict_output.run_metrics = run_metrics
         return dotdict_output
 
-    def _load_by_signature(self, signature: str):#
+    def _load_by_signature(self, signature: str):
         try:
-            self.job = self.job_manager.get_job(signature)
+            if is_valid_uuid(signature):
+                self.job = self.job_manager.get_job(idx=signature)
+            else:
+                self.job = self.job_manager.get_job(name=signature)
             return True
         except:
             return False

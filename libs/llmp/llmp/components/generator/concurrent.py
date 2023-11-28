@@ -46,13 +46,13 @@ class AsyncGenerator(BaseGenerator):
         super().__init__(job, job_settings, **kwargs)
         self._num_runs = num_runs
 
-    def generate(self, input_data: Union[dict, list[dict]], **kwargs) -> list[GenOutput]:
+    def generate(self, input_data: Union[dict, list[dict]], skip_errors: bool = False, **kwargs) -> list[GenOutput]:
         """Generate an output based on the job + job_setting and input data."""
         nest_asyncio.apply()
-        results = asyncio.run(self.run_engines(input_data, **kwargs))
+        results = asyncio.run(self.run_engines(input_data, skip_errors, **kwargs))
         return results
 
-    async def run_engines(self, input_data: Union[dict, list[dict]], **kwargs) -> list[GenOutput]:
+    async def run_engines(self, input_data: Union[dict, list[dict]], skip_errors: bool = False, **kwargs) -> list[GenOutput]:
         """Run the engines in parallel with identical job setup.
 
         Return a list of Tuple[output, run_metrics] for each run.
@@ -67,18 +67,21 @@ class AsyncGenerator(BaseGenerator):
 
         # single input
         if isinstance(input_data, dict):
-            results = await asyncio.gather(*[engine.run(input_data, **kwargs) for engine in engines])
+            results = await asyncio.gather(
+                *[engine.run(input_data, **kwargs) for engine in engines], return_exceptions=skip_errors
+            )
 
         # multiple inputs
         elif isinstance(input_data, list):
             results = await asyncio.gather(
-                *[engine.run(input_data_, **kwargs) for engine, input_data_ in zip(engines, input_data)]
+                *[engine.run(input_data_, **kwargs) for engine, input_data_ in zip(engines, input_data)],
+                return_exceptions=skip_errors
             )
 
         else:
             raise ValueError(f"Input data type {type(input_data)} not supported!")
 
-        return [result for result in results if result is not None]
+        return [result for result in results if result is not None and not isinstance(result, Exception)]
 
     @property
     def verification_type(self):

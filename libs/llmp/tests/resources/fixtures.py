@@ -2,7 +2,8 @@ from typing import Literal
 
 import pytest
 from pydantic import BaseModel
-import llmp.services.job_storage as jm
+import llmp.services.job_manager as jm
+import llmp.services.job_storage as js
 
 
 @pytest.fixture
@@ -17,7 +18,7 @@ def create_job_input():
 
     return {
         "job_name": "test_job",
-        "description": (
+        "instruction": (
             "Define the data types needed to create a output product."
             "Using the output description and provided data sources, decide on the types of data to be used."),
         "input_examples": [
@@ -39,12 +40,15 @@ def create_job_input():
 
 @pytest.fixture
 def job_manager():
-    return jm.JobStorage()
+    return jm.JobManager()
 
+@pytest.fixture
+def job_storage():
+    return js.JobStorage()
 
 @pytest.fixture
 def job_id():
-    return "a63a27cc8504457895fce645711ddcee"
+    return test_job.idx
 
 
 @pytest.fixture
@@ -54,7 +58,36 @@ def temp_job_id():
 
 @pytest.fixture
 def test_job():
-    return jm.JobStorage().get_job("a63a27cc8504457895fce645711ddcee")
+    class Input(BaseModel):
+        description: str
+        sources: list[Literal["internal", "external"]]
+
+    class Output(BaseModel):
+        external_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
+        internal_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
+
+    job_input = {
+        "job_name": "test_job",
+        "instruction": (
+            "Define the data types needed to create a output product."
+            "Using the output description and provided data sources, decide on the types of data to be used."),
+        "input_examples": [
+            Input(
+                description="A research paper on the effects of climate change on agriculture to be written",
+                sources=["external"]
+            ),
+            Input(
+                description="An internal report on the effects of climate change on agriculture to be written",
+                sources=["internal", "external"]
+            )
+        ],
+        "output_examples": [
+            Output(external_types=["textual", "numeric"], internal_types=[]),
+            Output(external_types=["textual", "numeric"], internal_types=["textual", "numeric"])
+        ]
+    }
+    job = jm.JobManager().create_job(input_model=Input, output_model=Output, **job_input)
+    return job
 
 @pytest.fixture
 def test_output_concensus_generator():

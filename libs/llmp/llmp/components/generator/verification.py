@@ -34,7 +34,7 @@ def get_best_output(outputs: list[dict], job: JobRecord) -> dict:
                        'sources': ['internal', 'external']},
         "task_output": [{f"Output {i}": o} for i, o in enumerate(unique_outputs)],
     }
-    best_option = st.generate(inputs)
+    best_option, m = st.run(inputs)
     return unique_outputs[int(best_option["index"])]
 
 
@@ -102,8 +102,8 @@ def _merge_metrics(run_metrics: list[dict]) -> dict:
 def _get_unique_outputs(outputs: list[dict]) -> list[dict]:
     unique_outputs = []
     for o in outputs:
-        if o[0] not in unique_outputs:
-            unique_outputs.append(o[0])
+        if o not in unique_outputs:
+            unique_outputs.append(o)
     return unique_outputs
 
 

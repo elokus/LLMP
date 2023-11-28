@@ -34,7 +34,7 @@ import json
 from uuid import uuid4
 
 from pathlib import Path
-from pydantic import BaseModel, UUID4, Field, validator
+from pydantic import BaseModel, UUID4, Field, validator, root_validator, PrivateAttr
 from typing import List, Dict, Optional, Any, Union, Type
 
 from llmp.data_model.events import Event
@@ -50,6 +50,8 @@ from llmp.integration.structgenie import (
     ExampleSelector,
     PromptBuilder,
 )
+from llmp.utils.io_model import hash_from_io_models
+from llmp.utils.signature import is_valid_uuid
 
 
 class JobRecord(BaseModel):
@@ -59,7 +61,7 @@ class JobRecord(BaseModel):
     The `JobRecord` class captures the core attributes of a job, its associated examples, and its history.
 
     Attributes:
-        idx (UUID4): A unique identifier for the job.
+        _idx (str): A unique identifier for the job.
         job_name (Optional[str]): The name of the job, if provided.
         version (int): The current version of the job, indicating updates or modifications.
         state (int): The current state of the job, indicating if it is active or inactive.
@@ -108,15 +110,20 @@ class JobRecord(BaseModel):
     example_records: List[ExampleRecord] = Field(default_factory=list)
     instruction: Optional[str] = None
 
-
     version_history: Dict[int, dict] = Field(default_factory=dict)
     generation_log: list[dict] = Field(default_factory=list)
     event_log: list[Event] = Field(default_factory=list)
+
 
     @classmethod
     @validator('version_history', pre=True)
     def convert_keys_to_int(cls, item):
         return {int(k): v for k, v in item.items()}
+
+    @property
+    def io_hash(self) -> str:
+        """Create a hash from the input and output models."""
+        return hash_from_io_models(self.input_model, self.output_model, self.instruction)
 
     def log_event(self, event: Event):
         """Add an event to the job."""

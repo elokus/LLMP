@@ -2,12 +2,14 @@ from typing import Dict, Any
 
 from llmp.components.job_factory import job_factory
 from llmp.components.instruction.generation import InstructionGenerator
+from llmp.components.settings.program_settings import ProgramSettings
 from llmp.data_model.events import Event
 from llmp.services.job_storage import JobStorage
 from llmp.components.generator import Generator, MajorVoteGenerator
 from llmp.data_model import JobRecord, ExampleRecord
 from llmp.types import EventType, IOModelDefinition
 from llmp.utils.io_model import hash_from_io_models
+from llmp.utils.signature import safe_job_name
 
 
 def load_generator_cls(generator_type: str):
@@ -23,12 +25,14 @@ def load_generator_cls(generator_type: str):
 
 
 class JobManager:
-    def __init__(self, config: dict):
-        self.job_storage = JobStorage(config.get("base_path"))
+    def __init__(self, config: dict = None):
+        config = config or {}
+        self.job_storage = JobStorage(config.get("base_path", "./data/jobs"))
 
     def create_job(
             self,
             job_name: str,
+            config: dict = ProgramSettings().dict(),
             **kwargs) -> JobRecord:
         """Create a new job.
 
@@ -37,14 +41,23 @@ class JobManager:
         """
         job = job_factory(
             job_name=job_name,
-            **kwargs)
+            config=config,
+            **kwargs
+        )
 
-        # register job_name and io_hash
-        io_hash = hash_from_io_models(job.input_model, job.output_model, kwargs.get("instruction", None))
-        _job_name = self.job_storage.register_job(job_name, job.idx, io_hash)
-        if job_name != _job_name:
-            job.job_name = _job_name
-            print(f"Job name '{job_name}' already exists. Using '{_job_name}' instead.")
+        # check if job already exists
+        if self.job_storage.key_in_registry(job.io_hash):
+            job = self.job_storage.get(io_hash=hash_from_io_models(job.input_model, job.output_model, job.instruction))
+            print(f"Job with identical InputModel and OutputModel already exists. Using existing {job.job_name} instead.")
+            return job
+
+        # check if job_name already exists
+        if self.job_storage.key_in_registry(job.job_name):
+            job.job_name = safe_job_name(job_name, self.job_storage.get_registry_keys())
+            print(f"Job name '{job_name}' already exists. Using '{job.job_name}' instead.")
+
+        # register job
+        self.job_storage.register_job(job)
 
         # log creation event
         job.log_event(Event(
@@ -53,27 +66,35 @@ class JobManager:
             job_version=job.version,
         ))
 
-        # generate instruction
+        # generate instruction if not provided
         if not job.instruction:
             job.instruction = self.generate_instruction(job, **kwargs)
-            self.job_storage.update_job(job)
+            print(f"Generated instruction: {job.instruction}")
+
+            # log instruction generation event
+            job.log_event(Event(
+                event_type=EventType.UPDATE_JOB,
+                job_setting=dict(instruction=job.instruction, example_id=[example.idx for example in job.example_records]),
+                job_version=job.version,
+            ))
 
         # save job
-        self.job_storage.update_job(job)
+        self.job_storage.store_job(job)
 
         return job
 
-    def get_job(self, signature: str) -> JobRecord:
+
+    def get_job(self, idx: str = None, name: str = None, io_hash: str = None) -> JobRecord:
         """Retrieve details for a specific job."""
-        return self.job_storage.get_job(signature)
+        return self.job_storage.get(idx=idx, name=name, io_hash=io_hash)
 
     def update_job(self, job: JobRecord):
         """Update details of a specific job."""
-        return self.job_storage.update_job(job)
+        self.job_storage.update_job(job)
 
-    def delete_job(self, signature: str):
+    def delete_job(self, idx: str):
         """Delete a specific job."""
-        return self.job_storage.delete_job(signature)
+        return self.job_storage.delete_job(idx)
 
     def optimize_job(self, *args, **kwargs):
         """Run the optimization process for a job, including generating examples and refining instructions."""
@@ -96,6 +117,8 @@ class JobManager:
 
     def generate_instruction(self, job: JobRecord, **kwargs) -> str:
         """Generate an instruction for a specific job."""
+
+
         generator = InstructionGenerator(job, **kwargs)
         return generator.run()
 
@@ -117,8 +140,7 @@ class JobManager:
 
     def get_job_by_input_output_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None) -> JobRecord:
         """Retrieve a job by input/output model."""
-        io_hash = hash_from_io_models(input_model, output_model)
-        return self.job_storage.get_job(io_hash)
+        return self.job_storage.get(io_hash=hash_from_io_models(input_model, output_model, instruction))
 
 
     def log_action(self, action: str, job_id: str):
@@ -127,12 +149,12 @@ class JobManager:
 
     def get_event_log(self, job_id: str):
         """Retrieve the event log for a specific job."""
-        job = self.job_storage.get_job(job_id)
+        job = self.job_storage.get(idx=job_id)
         return self.job_storage.load_event_log(job)
 
     def get_generation_log(self, job_id: str):
         """Retrieve the generation log for a specific job."""
-        job = self.job_storage.get_job(job_id)
+        job = self.job_storage.get(idx=job_id)
         return self.job_storage.load_generation_log(job)
 
     # # === Private methods ===

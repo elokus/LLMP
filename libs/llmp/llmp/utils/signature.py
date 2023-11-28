@@ -29,9 +29,10 @@ def is_valid_uuid(val):
 
 
 def safe_job_name(planned_name: str, existing_names: list, prefix: str = "_v") -> str:
-    for name in existing_names:
+    blocked_names = [name for name in existing_names if name.startswith(planned_name)]
+    for name in blocked_names:
         if name.startswith(planned_name):
-            return f"{planned_name}{prefix}{len(existing_names)}"
+            return f"{planned_name}{prefix}{len(blocked_names)}"
     return planned_name
 
 

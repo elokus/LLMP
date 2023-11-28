@@ -4,7 +4,7 @@ from llmp.components.instruction.utils import mutate_instruction, generate_instr
 
 class InstructionGenerator(BaseInstructionHandler):
 
-    def run(self):
+    def run(self, **kwargs):
         """Run the instruction generation process."""
 
         if len(self.job.example_records) > 0:
@@ -24,4 +24,5 @@ class InstructionGenerator(BaseInstructionHandler):
                 input_model=self.job.input_model,
                 output_model=self.job.output_model,
                 debug=self.debug,
+                raise_errors=self.raise_errors,
             )

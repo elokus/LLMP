@@ -195,9 +195,9 @@ def job_factory(
         example_pairs = list(zip(input_examples, output_examples))
         
     if example_pairs:
-        if isinstance(example_pairs, tuple):
+        if isinstance(example_pairs[0], tuple):
             example_pairs = [Example(input=inp, output=out) for inp, out in example_pairs]
-        elif isinstance(example_pairs, dict):
+        elif isinstance(example_pairs[0], dict):
             example_pairs = [Example.from_dict(**example) for example in example_pairs]
 
     # create from string template

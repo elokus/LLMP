@@ -27,6 +27,7 @@ from llmp.types import VerificationType
 from llmp.components.generator.consensus import MajorVoteGenerator
 from llmp.data_model import ExampleRecord, JobRecord
 from llmp.integration.structgenie import OutputModel
+from structgenie.engine import StructEngine
 
 
 class ExampleGenerator(BaseGenerator):
@@ -44,41 +45,62 @@ class ExampleGenerator(BaseGenerator):
             job_settings: dict = None,
             num_votes: int = 5,
             mode: VerificationType = VerificationType.MAJORITY_VOTE,
+            debug: bool = False,
+            raise_errors: bool = False,
             **kwargs
     ):
-        """Initialize the generator with a job and job settings.
+        """
+        Initialize the generator with a job and job settings.
 
         Args:
-            job (JobRecord): the job to be executed
-            job_settings (dict): the job settings to be used
-            num_votes (int): number of votes to be collected
-            mode (VerificationType): the verification type to be used (majority vote, majority grade, human verified)
-            **kwargs: any -  passed to MajorVoteGenerator
+            job (JobRecord): The job to be executed.
+            job_settings (dict): The job settings to be used.
+            num_votes (int): Number of votes to be collected for the MajorVoteGenerator.
+            mode (VerificationType): The verification type to be used (majority vote, majority grade, human verified).
+            debug (bool): If True, debug information will be printed.
+            raise_errors (bool): If True, errors will be raised.
+            **kwargs: Additional keyword arguments passed to MajorVoteGenerator.
         """
 
         super().__init__(job, job_settings)
-        self.generator = MajorVoteGenerator(job, job_settings, num_votes, mode, return_event_log=True, **kwargs)
+        self.output_generator = MajorVoteGenerator(
+            job, job_settings, num_votes, mode, return_event_log=True, raise_errors=raise_errors, debug=debug, **kwargs
+        )
+        self.input_generator = self._load_engine(job, debug=debug, raise_errors=raise_errors, **kwargs)
+        self.run_metrics = {}
 
-    def generate(self, num_items, **kwargs) -> list[Union[ExampleRecord, dict]]:
-        """Generate examples for a given job.
+    def generate(
+            self,
+            num_items, **kwargs) -> list[Union[ExampleRecord, dict]]:
+        """
+        Generate examples for a given job.
 
-        1. Generate inputs with a template
-        2. Generate outputs with a MajorVoteGenerator
+        This method generates inputs with a template and then generates outputs with a MajorVoteGenerator.
 
         Args:
-            num_items (int): number of examples to be generated
-            **kwargs: any -  passed to MajorVoteGenerator.generate() method
+            num_items (int): Number of examples to be generated.
+            **kwargs: Additional keyword arguments passed to MajorVoteGenerator.generate() method.
 
         Returns:
-            list[Union[ExampleRecord, dict]]: list of generated examples
+            list[Union[ExampleRecord, dict]]: List of generated examples.
         """
-        input_list = self._generate_inputs(num_items)
-        return self._generate_outputs(input_list)
+        input_list = self._generate_inputs(num_items, **kwargs)
+        return self._generate_outputs(input_list, **kwargs)
 
-    def _generate_outputs(self, input_list: list[dict]) -> list[ExampleRecord]:
+    def _generate_outputs(self, input_list: list[dict], **kwargs) -> list[ExampleRecord]:
+        """
+        Generate outputs for the given inputs.
+
+        Args:
+            input_list (list[dict]): List of input objects.
+            **kwargs: Additional keyword arguments passed to MajorVoteGenerator.generate() method.
+
+        Returns:
+            list[ExampleRecord]: List of ExampleRecord objects.
+        """
         examples = []
         for input_object in input_list:
-            output, event = self.generator.generate(input_object)
+            output, event = self.output_generator.generate(input_object, **kwargs)
             record = ExampleRecord.from_input_output(
                 input_obj=input_object,
                 output_obj=output,
@@ -90,20 +112,49 @@ class ExampleGenerator(BaseGenerator):
             examples.append(record)
         return examples
 
-    def _generate_inputs(self, num_items: int = 20) -> list[dict]:
-        input_model = OutputModel(**self.job.input_model.dict())
-        engine = Engine.from_template(
-            self.TEMPLATE, partial_output_model={"outputs": input_model}, debug=self._debug
-        )  # type: ignore
+    def _generate_inputs(self, num_items: int = 20, **kwargs) -> list[dict]:
+        """
+        Generate inputs for the examples.
 
+        Args:
+            num_items (int): Number of inputs to be generated.
+            **kwargs: Additional keyword arguments passed to the input generator.
+
+        Returns:
+            list[dict]: List of input objects.
+        """
         input_dict = {
             "instruction": self._job_settings.get("instruction", None) or self.job.instruction,
             "num_examples": num_items,
             "input_example": [example.example.input for example in self.job.example_records],
         }
-        output = engine.run(input_dict)
+        output, _ = self.input_generator.run(input_dict, **kwargs)
         return output["outputs"]
 
     @property
     def verification_type(self):
+        """
+        Return the validation type for the generator.
+
+        Returns:
+            None: This method should be overridden in subclasses.
+        """
         return None
+
+    def _load_engine(self, job: JobRecord, **kwargs) -> "StructEngine":
+        """
+        Load the engine for the generator.
+
+        Initializes the engine with the prompt template and parse the input model as partial_output_model.
+
+        Args:
+            job (JobRecord): The job to be executed.
+            **kwargs: Additional keyword arguments passed to the engine.
+
+        Returns:
+            StructEngine: The engine for the generator.
+        """
+        input_model = OutputModel(**job.input_model.dict())
+        return Engine.from_template(
+            self.TEMPLATE, partial_output_model={"outputs": input_model}, **kwargs
+        )
