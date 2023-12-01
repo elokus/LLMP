@@ -129,10 +129,18 @@ class JobStorage(FileOperations):
         job_dir.mkdir(parents=True, exist_ok=True)
 
         # Save/Append Event History
-        self._append_jsonl_file(job_dir / "event_log.jsonl", [event.dict() for event in job.event_log])
+        event_log = self._read_jsonl_file(job_dir / "event_log.jsonl")
+        event_ids = [event["event_id"] for event in event_log]
+        new_events = [event.dict() for event in job.event_log if event.event_id not in event_ids]
+        self._append_jsonl_file(job_dir / "event_log.jsonl", new_events)
+        job.event_log = []
 
         # Save/Append Generation History
-        self._append_jsonl_file(job_dir / "generation_log.jsonl", job.generation_log)
+        generation_log = self._read_jsonl_file(job_dir / "generation_log.jsonl")
+        event_ids = [event["event_id"] for event in generation_log]
+        new_events = [event for event in job.generation_log if event["event_id"] not in event_ids]
+        self._append_jsonl_file(job_dir / "generation_log.jsonl", new_events)
+        job.generation_log = []
 
     def _load_job(self, job_idx: str) -> "JobRecord":
         job_dir = Path(self.base_path) / job_idx

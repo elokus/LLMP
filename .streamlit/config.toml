@@ -1,0 +1,5 @@
+[theme]
+base = "dark"
+primaryColor="#BB86FC"
+backgroundColor="#121212"
+secondaryBackgroundColor="#1F1B24"
