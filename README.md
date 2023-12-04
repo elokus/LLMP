@@ -70,6 +70,23 @@ print(result)
 }
 ```
 
+### Monitoring a Job
+
+To monitor existing jobs, you can use the `streamlit` command-line tool to run the monitoring application. Navigate to the `libs/llmp-monitor` directory and run the following command:
+
+```bash
+streamlit run app.py
+```
+
+Here you can past your local job directory path to monitor, update and optimize jobs located in that directory.
+Once you have run the command and entered the path, you can access the monitoring application at `http://localhost:8501`.
+You should see a screen similar to the following:
+
+
+![App Screenshot](docs/static/img/screenshot_monitor_app.png)
+
+
+
 ## Architecture
 
 LLMP follows a component-based architecture with service layers, ensuring modularity and scalability. For detailed insights into the architecture, refer to the project documentation.
