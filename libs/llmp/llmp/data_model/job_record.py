@@ -110,15 +110,9 @@ class JobRecord(BaseModel):
     example_records: List[ExampleRecord] = Field(default_factory=list)
     instruction: Optional[str] = None
 
-    version_history: Dict[int, dict] = Field(default_factory=dict)
+    version_history: list[dict] = Field(default_factory=list)
     generation_log: list[dict] = Field(default_factory=list)
     event_log: list[Event] = Field(default_factory=list)
-
-
-    @classmethod
-    @validator('version_history', pre=True)
-    def convert_keys_to_int(cls, item):
-        return {int(k): v for k, v in item.items()}
 
     @property
     def io_hash(self) -> str:
@@ -134,7 +128,7 @@ class JobRecord(BaseModel):
     ) -> Event:
         """Add a generation to the job."""
         example_id = get_record_by_input(self, input_object).idx if input_in_records(self, input_object) else None
-        event = Event.from_generation_job(event_metric, job_settings, example_id=example_id)
+        event = Event.from_generation_job(event_metric, job_settings, example_id=example_id, job_version=self.version)
         self.log_event(event)
 
         self.generation_log.append(dict(
@@ -159,11 +153,7 @@ class JobRecord(BaseModel):
         self.instruction = instruction
         self.example_records = examples
 
-        self.version_history[self.version] = {
-            "instruction": instruction,
-            "examples": [f"{example.idx}:{example.version}" for example in examples],
-            "metrics": metrics,
-        }
+        self.version_history.append(self.dict())
 
     def add_example(self, example_record: ExampleRecord, **kwargs) -> None:
         """Add an example to the job."""

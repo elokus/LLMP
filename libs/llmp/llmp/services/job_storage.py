@@ -97,6 +97,10 @@ class JobStorage(FileOperations):
         job_dir = self._get_job_directory(job)
         return [Event.parse_obj(entry) for entry in self._read_jsonl_file(job_dir / "event_log.jsonl")]
 
+    def load_version_history(self, job: JobRecord) -> list[dict]:
+        job_dir = self._get_job_directory(job)
+        return self._read_jsonl_file(job_dir / "version_history.jsonl")
+
     def store_event_log(self, job: JobRecord, events: list[Event]) -> None:
         job_dir = self._get_job_directory(job)
         self._write_jsonl_file(job_dir / "event_log.jsonl", [event.dict() for event in events])
@@ -119,7 +123,7 @@ class JobStorage(FileOperations):
         self._write_jsonl_file(job_dir / "examples.jsonl", [example.dict() for example in job.example_records])
 
         # Save Version History
-        self._write_jsonl_file(job_dir / "version_history.jsonl", [dict(version=version, **version_data) for version, version_data in job.version_history.items()])
+        self._append_jsonl_file(job_dir / "version_history.jsonl", [version for version in job.version_history])
 
         # Save/append logs
         self._save_logs(job)
@@ -150,9 +154,6 @@ class JobStorage(FileOperations):
 
         # Load Examples
         metadata["example_records"] = [ExampleRecord.parse_obj(example) for example in self._read_jsonl_file(job_dir / "examples.jsonl")]
-
-        # Load Version History
-        metadata["version_history"] = {entry["version"]: entry for entry in self._read_jsonl_file(job_dir / "version_history.jsonl")}
 
         return JobRecord(**metadata)
 

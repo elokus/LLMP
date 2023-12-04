@@ -46,28 +46,31 @@ class Event(BaseModel):
     ref_event_id: Union[str, None] = None
 
     @classmethod
-    def from_sample_metric(cls, sample_metric: dict, job_setting: dict, example_id: Union[str, UUID] = None):
+    def from_sample_metric(cls, sample_metric: dict, job_setting: dict, example_id: Union[str, UUID] = None, **kwargs):
         return cls(
             event_type=EventType.SAMPLE_EVAL,
             example_id=example_id,
             event_metrics=sample_metric,
             job_setting=job_setting,
+            **kwargs
         )
 
     @classmethod
-    def from_evaluation_metric(cls, eval_metric: dict, job_setting: dict, example_ids: list[str] = None):
+    def from_evaluation_metric(cls, eval_metric: dict, job_setting: dict, example_ids: list[str] = None, **kwargs):
         return cls(
             event_type=EventType.EVAL_RUN,
             example_id=example_ids,
             event_metrics=eval_metric,
             job_setting=job_setting,
+            **kwargs
         )
 
     @classmethod
-    def from_generation_job(cls, event_metric: dict, job_setting: dict, example_id: Union[str, UUID] = None):
+    def from_generation_job(cls, event_metric: dict, job_setting: dict, example_id: Union[str, UUID] = None, **kwargs):
         return cls(
             event_type=EventType.GENERATION,
             example_id=example_id,
             event_metrics=event_metric,
             job_setting=job_setting,
+            **kwargs
         )

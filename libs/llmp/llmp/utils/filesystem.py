@@ -8,6 +8,8 @@ from llmp.utils.encoder import JSONEncoder, dumps_encoder
 class FileOperations:
 
     def _read_json_file(self, file_path: Path) -> Dict:
+        if not file_path.exists():
+            return {}
         with file_path.open('r') as f:
             return json.load(f)
 
@@ -16,6 +18,8 @@ class FileOperations:
             json.dump(data, f, cls=JSONEncoder)
 
     def _read_jsonl_file(self, file_path: Path) -> List[Dict]:
+        if not file_path.exists():
+            return []
         with jsonlines.open(file_path, mode='r') as reader:
             return [entry for entry in reader]
 
