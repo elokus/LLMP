@@ -93,7 +93,7 @@ class Program:
             load_if_exist (bool, optional): If True, attempts to load a job if it exists. Defaults to True.
             **kwargs: Additional keyword arguments.
         """
-        self.job_manager = JobManager(config.dict())
+        self.job_manager = JobManager(config.base_path)
         self.config = config
 
         # if input_model/output_model create new Job
@@ -102,7 +102,6 @@ class Program:
                 return
             if self._load_by_io_model(input_model, output_model, instruction=kwargs.get("instruction", None)):
                 return
-
 
         if input_model and output_model:
             self.job = self.job_manager.create_job(
@@ -115,8 +114,6 @@ class Program:
         # load job by signature
         else:
             self.job = self.job_manager.get_job(signature)
-
-
 
     def __call__(
             self,

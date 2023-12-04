@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-import utils
+from scripts import utils
 
 
 # ============================== Main ==============================
@@ -25,7 +25,6 @@ def display_sidebar(base_path):
     st.sidebar.title("LLMP Monitor")
     edited_base_path = st.sidebar.text_input("Base path", base_path)
     if edited_base_path != base_path:
-        st.cache.clear_cache()
         base_path = edited_base_path
     st.markdown("---")
     st.sidebar.write("Select a job to monitor:")
@@ -44,34 +43,60 @@ def display_job_sidebar(metadata, event_logs):
         return
 
     st.sidebar.markdown("---")
+    col1, col2 = st.sidebar.columns(2)
+    max_version = metadata['version']
+    col1.markdown(f"### Current Version: {max_version}")
+    # control
+    current_version = col1.selectbox(
+        "Select version",
+        options=[i for i in range(max_version +1)],
+        index=max_version
+    )
+    if col2.button("reload", key="reload"):
+        st.rerun()
     # version
-    st.sidebar.markdown(f"### Current Version: {metadata['version']}")
+
 
     # metrics
     generation_events = [event for event in event_logs if event["event_type"] == "generation"]
     if len(generation_events) > 0:
-        metrics = [event["event_metrics"] for event in generation_events]
-        df = pd.DataFrame(metrics)
+        metrics_current_version = [
+            event["event_metrics"] for event in generation_events if event["job_version"] == current_version
+        ]
+        metrics_previous_versions = [
+            event["event_metrics"] for event in generation_events if event["job_version"] == current_version - 1
+        ]
 
+        # Filter df for current and previous versions
+        current_df = pd.DataFrame(metrics_current_version)
+        previous_df = pd.DataFrame(metrics_previous_versions)
 
+        current_df = previous_df if current_df.empty else current_df
+
+        # Delta color
+        delta_color = "inverse" if not previous_df.empty else "off"
 
         # Execution time
-        mean_exec_time = df["execution_time"].mean()
-        max_exec_time = df["execution_time"].max()
-        delta = mean_exec_time - max_exec_time
-        st.sidebar.metric("Mean execution time", value=f"{mean_exec_time:.2f} s", delta=f"{delta:.2f} s")
+        mean_exec_time_current = current_df["execution_time"].mean() if not current_df.empty else 0
+        mean_exec_time_previous = previous_df["execution_time"].mean() if not previous_df.empty else 0
+        delta_exec_time = mean_exec_time_current - mean_exec_time_previous if not previous_df.empty else 0
+        st.sidebar.metric(
+            "Execution time",
+            value=f"{mean_exec_time_current:.2f} s",
+            delta=f"{delta_exec_time:.2f} s",
+            delta_color=delta_color)
 
         # Token usage
-        mean_token_usage = df["token_usage"].mean()
-        max_token_usage = df["token_usage"].max()
-        delta = mean_token_usage - max_token_usage
-        st.sidebar.metric("Mean token usage", value=mean_token_usage, delta=delta)
+        mean_token_usage_current = current_df["token_usage"].mean() if not current_df.empty else 0
+        mean_token_usage_previous = previous_df["token_usage"].mean() if not previous_df.empty else 0
+        delta_token_usage = mean_token_usage_current - mean_token_usage_previous if not previous_df.empty else 0
+        st.sidebar.metric("Token usage", value=mean_token_usage_current, delta=delta_token_usage, delta_color=delta_color)
 
         # failure rate
-        failure_rate = df["failure_rate"].mean() -1
-        max_failure_rate = df["failure_rate"].max() -1
-        delta = failure_rate - max_failure_rate
-        st.sidebar.metric("Mean failure rate", value=failure_rate, delta=delta)
+        failure_rate_current = current_df["failure_rate"].mean() - 1 if not current_df.empty else 0
+        failure_rate_previous = previous_df["failure_rate"].mean() - 1 if not previous_df.empty else 0
+        delta_failure_rate = failure_rate_current - failure_rate_previous if not previous_df.empty else 0
+        st.sidebar.metric("Failure rate", value=failure_rate_current, delta=delta_failure_rate, delta_color=delta_color)
 
 
 # ============================== Tabs ==============================
@@ -97,7 +122,11 @@ def display_editable_metadata(tab, metadata):
     edited_metadata = {}
     edited_metadata["idx"] = metadata["idx"]
     edited_metadata["job_name"] = tab.text_input("Job name", metadata['job_name'])
-    edited_metadata["instruction"] = tab.text_area("Instruction", metadata['instruction'])
+    edited_metadata["instruction"] = tab.text_area(
+        "Instruction",
+        metadata['instruction'],
+        height=int(len(metadata['instruction']) / 2)
+    )
 
     for key, value in metadata.items():
         if key in ["idx", "instruction", "job_name"]:
@@ -167,11 +196,11 @@ def _generation_log_entry(tab, entry):
                 output_dict[key] = []
                 for i, item in enumerate(value):
                     unique_key = f"{entry['event_id']}_{key}_{i}"
-                    edited_item = col2.text_input(f"{key} {i}", item, key=unique_key)
+                    edited_item = display_text_input_by_size(col2, f"{key} {i}", item, key=unique_key)
                     output_dict[key].append(edited_item)
         else:
             unique_key = f"{entry['event_id']}_{key}"
-            edited_value = col2.text_input(key, value, key=unique_key)
+            edited_value = display_text_input_by_size(col2, key, value, key=unique_key)
             output_dict[key] = edited_value
 
     # Return the edited entry
@@ -196,3 +225,11 @@ def display_event_entry(tab, event):
 
 
 
+# === Utils ===
+def display_text_input_by_size(tab, label, value, key=None):
+    if key is None:
+        key = label
+    if len(value) > 100:
+        return tab.text_area(label, value, key=key, height=int(len(value) / 1.5))
+    else:
+        return tab.text_input(label, value, key=key)

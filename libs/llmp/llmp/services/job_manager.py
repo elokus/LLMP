@@ -25,20 +25,24 @@ def load_generator_cls(generator_type: str):
 
 
 class JobManager:
-    def __init__(self, config: dict = None):
-        config = config or {}
-        self.job_storage = JobStorage(config.get("base_path", "./data/jobs"))
+    def __init__(self, base_path: str = None):
+        if base_path is None:
+            base_path = "./data/jobs"
+        self.job_storage = JobStorage(base_path)
 
     def create_job(
             self,
             job_name: str,
-            config: dict = ProgramSettings().dict(),
+            config: dict = None,
             **kwargs) -> JobRecord:
         """Create a new job.
 
         Generate a new job with the provided signature and kwargs.
         If not provided, the instruction will be generated automatically.
         """
+        if config is None:
+            config = ProgramSettings().dict()
+
         job = job_factory(
             job_name=job_name,
             config=config,
@@ -83,7 +87,6 @@ class JobManager:
 
         return job
 
-
     def get_job(self, idx: str = None, name: str = None, io_hash: str = None) -> JobRecord:
         """Retrieve details for a specific job."""
         return self.job_storage.get(idx=idx, name=name, io_hash=io_hash)
@@ -117,8 +120,6 @@ class JobManager:
 
     def generate_instruction(self, job: JobRecord, **kwargs) -> str:
         """Generate an instruction for a specific job."""
-
-
         generator = InstructionGenerator(job, **kwargs)
         return generator.run()
 
@@ -202,3 +203,13 @@ class JobManager:
     #     self._save_job(new_job)
     #     return new_job
 
+
+
+
+def get_internal_jobs_path():
+    import os
+    import inspect
+
+    current_file_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    internal_jobs_path = os.path.join(current_file_path, 'internal_jobs')
+    return internal_jobs_path
