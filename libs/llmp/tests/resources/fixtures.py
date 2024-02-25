@@ -13,8 +13,8 @@ def create_job_input():
         sources: list[Literal["internal", "external"]]
 
     class Output(BaseModel):
-        external_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
-        internal_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
+        external_types: list[Literal['numeric', 'textual', 'multimedia', 'code', 'None']]
+        internal_types: list[Literal['numeric', 'textual', 'multimedia', 'code', 'None']]
 
     return {
         "job_name": "test_job",
@@ -64,8 +64,8 @@ def test_job():
         sources: list[Literal["internal", "external"]]
 
     class Output(BaseModel):
-        external_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
-        internal_types: list[Literal['numeric', 'textual', 'multimedia', 'code', None]]
+        external_types: list[Literal['numeric', 'textual', 'multimedia', 'code', 'None']]
+        internal_types: list[Literal['numeric', 'textual', 'multimedia', 'code', 'None']]
 
     job_input = {
         "job_name": "test_job",
