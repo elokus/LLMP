@@ -58,6 +58,7 @@ def temp_job_id():
 
 @pytest.fixture
 def test_job():
+
     class Input(BaseModel):
         description: str
         sources: list[Literal["internal", "external"]]

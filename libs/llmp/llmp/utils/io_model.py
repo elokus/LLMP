@@ -26,7 +26,7 @@ def hash_from_io_models(input_model: UnionIOModel, output_model: UnionIOModel, i
 # === InputModel ===
 
 def load_input_model(model: IOModelDefinition):
-    if isinstance(model, ModelMetaclass):
+    if isinstance(model, type) and issubclass(model, BaseModel):
         return InputModel.from_pydantic(model)
     return parse_input_model(model)
 
@@ -54,7 +54,7 @@ def _(model: dict):
 
 
 def load_output_model(model: IOModelDefinition):
-    if issubclass(model, BaseModel):
+    if isinstance(model, type) and issubclass(model, BaseModel):
         return OutputModel.from_pydantic(model)
     return parse_output_model(model)
 
@@ -77,3 +77,20 @@ def _(model: OutputModel):
 @parse_output_model.register
 def _(model: dict):
     return OutputModel(**model)
+
+
+if __name__ == "__main__":
+
+    class InputObject(BaseModel):
+        book_title: str
+        book_author: str
+        release_year: int
+
+
+    c = InputObject
+    d = InputObject(book_title="The Lord of the Rings", book_author="J.R.R. Tolkien", release_year=1954)
+
+    # check if c is class
+
+    print(isinstance(c, type))
+    print(isinstance(d, type))
