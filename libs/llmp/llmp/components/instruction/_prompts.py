@@ -11,6 +11,25 @@ Reasoning: <str>
 Instruction: <str>
 """
 
+ENHANCED_INSTRUCTION_FROM_MODEL = """"Imagine you have a task where you only know the input and output models, but the original instruction is missing. Your goal is to reverse engineer the instruction based on these models.
+
+1. Objective: Consider the objective of this task. What is the main purpose of transforming the input to the output as defined by these models?
+2. Input-Output Relationship: Analyze the relationship between the input and output. What patterns or rules might govern how the input is transformed into the output?
+3. Hypothetical Examples: Generate a few hypothetical examples of inputs and what the corresponding outputs would be. How do these examples adhere to the models?
+4. Operation Suggestions: Consider what types of operations (such as labeling, extracting, compressing, generating, etc.) could be used to transform any given input object with the mentioned structure into the desired output object. Which operation seems most fitting and why?
+
+By methodically analyzing these aspects, you can deduce the most likely instruction that was originally used for this task."
+This enhanced prompt encourages a more structured approach to reverse engineering the task instruction, prompting for a thorough analysis of the input and output models and their relationship.
+
+# Input
+Input Model: {inp_model}
+Output Model: {out_model}
+---
+Reasoning: <str>
+Instruction: <str>
+"""
+
+
 INSTRUCTION_FROM_MODEL_AND_EXAMPLES = """Create the task instruction based on the input and output model for the task provided below. The Input and Output Object are provided as a guide to the format of the input and output objects. The input and output objects may be different for each task but will have the same keys. So you should not include any information from the example given, instead you should use the input and output keys to describe the input and output objects.
 Think step-by-step to reverse engineer the task instruction. What other inputs might look like with same keys? What is the relationship between them? What might be the right operation (label, extract, compress, generate, etc.) to get from any input with that structure to the output?
 

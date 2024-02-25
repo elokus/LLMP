@@ -41,18 +41,16 @@ config : dict
 
 
 """
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 from typing import Type
 
 from llmp.utils.signature import is_valid_uuid
-from structgenie.components.input_output import InputModel, OutputModel
 
 from llmp.components.settings.program_settings import ProgramSettings, PromptType
 from llmp.data_model import JobRecord
 from llmp.services.job_manager import JobManager
 from llmp.utils.helper import dotdict
 from llmp.types import IOModelDefinition
-from llmp.utils.io_model import parse_input_model, parse_output_model
 
 
 class Program:

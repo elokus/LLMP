@@ -21,7 +21,7 @@ def test_job_record_creation():
         output_model=output_model,
         example_records=[example_record],
         instruction="Test instruction",
-        version_history={0: {}},
+        version_history=[{0: {}}],
         generation_log=[],
         event_log=[]
     )
@@ -34,7 +34,7 @@ def test_job_record_creation():
     assert job_record.output_model == output_model
     assert job_record.example_records == [example_record]
     assert job_record.instruction == "Test instruction"
-    assert job_record.version_history == {0: {}}
+    assert job_record.version_history == [{0: {}}]
     assert job_record.generation_log == []
     assert job_record.event_log == []
 
@@ -54,7 +54,7 @@ def test_job_record_methods():
         output_model=output_model,
         example_records=[example_record],
         instruction="Test instruction",
-        version_history={0: {}},
+        version_history=[{0: {}}],
         generation_log=[],
         event_log=[]
     )

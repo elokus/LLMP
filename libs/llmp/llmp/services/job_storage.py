@@ -148,13 +148,11 @@ class JobStorage(FileOperations):
 
     def _load_job(self, job_idx: str) -> "JobRecord":
         job_dir = Path(self.base_path) / job_idx
-
         # Load Metadata
         metadata = self._read_json_file(job_dir / "metadata.json")
 
         # Load Examples
         metadata["example_records"] = [ExampleRecord.parse_obj(example) for example in self._read_jsonl_file(job_dir / "examples.jsonl")]
-
         return JobRecord(**metadata)
 
 

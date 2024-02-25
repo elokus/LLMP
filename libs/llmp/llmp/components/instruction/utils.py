@@ -4,10 +4,7 @@ Mutation prompts and working out prompt where taken from the following paper:
 References: Google DeepMinde PromptBreeder: https://arxiv.org/pdf/2309.16797.pdf
 """
 
-from typing import Type
-from pydantic import BaseModel
 
-from llmp.data_model import JobRecord
 from llmp.integration.structgenie import Engine, InputModel, OutputModel
 
 import llmp.components.instruction._prompts as template

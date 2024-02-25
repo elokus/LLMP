@@ -3,14 +3,14 @@ Manage and store examples for a given job.
 """
 import itertools
 import random
-from pydantic import UUID4
+from structgenie.pydantic_v1 import UUID4
 
 from llmp.integration.example_selector import ExampleManagerSelector
 from llmp.components.base import BaseExampleManager
 from llmp.components.generator import ExampleGenerator
 from llmp.data_model import ExampleRecord, JobRecord
-from llmp.data_model.events import Event
-from llmp.types import TestSetMode, EventType
+
+from llmp.types import TestSetMode
 
 
 # ===============================

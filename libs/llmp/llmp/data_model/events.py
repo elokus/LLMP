@@ -25,7 +25,7 @@ Event specific data:
 from typing import Union, Optional
 from uuid import uuid4, UUID
 
-from pydantic import BaseModel, Field
+from structgenie.pydantic_v1 import BaseModel, Field
 
 from llmp.types import EventType
 from llmp.utils.helper import get_timestamp
@@ -35,7 +35,7 @@ class Event(BaseModel):
     event_id: str = Field(default_factory=lambda: uuid4().hex)
     timestamp: str = Field(default_factory=get_timestamp)
     event_type: EventType
-    event_metrics: Union[dict, None] = None
+    event_metrics: Optional[dict] = None
 
     # ---
     job_setting: Union[dict, None] = None

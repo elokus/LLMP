@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Tuple, Type, Union
 
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 from structgenie.components.input_output import InputModel, OutputModel
 
 GenOutput = Tuple[dict, dict]

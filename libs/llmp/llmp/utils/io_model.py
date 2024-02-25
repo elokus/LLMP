@@ -1,14 +1,12 @@
 from functools import singledispatch
-from typing import Type
 
-from pydantic.main import ModelMetaclass
+from structgenie.pydantic_v1 import BaseModel
 from structgenie.components.input_output import InputModel, OutputModel
 
 from llmp.types import IOModelDefinition, UnionIOModel
 import hashlib
 
 # === hash_from_model ===
-
 
 def hash_from_io_models(input_model: UnionIOModel, output_model: UnionIOModel, instruction: str = None):
     """Create a hash from a model.
@@ -56,7 +54,7 @@ def _(model: dict):
 
 
 def load_output_model(model: IOModelDefinition):
-    if isinstance(model, ModelMetaclass):
+    if issubclass(model, BaseModel):
         return OutputModel.from_pydantic(model)
     return parse_output_model(model)
 
@@ -79,4 +77,3 @@ def _(model: OutputModel):
 @parse_output_model.register
 def _(model: dict):
     return OutputModel(**model)
-

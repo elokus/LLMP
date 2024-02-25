@@ -1,7 +1,6 @@
 import pytest
 from llmp.services.program import Program
-from llmp.components.settings.program_settings import ProgramSettings
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 from typing import Literal
 
 class InputObject(BaseModel):

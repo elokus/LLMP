@@ -1,7 +1,7 @@
 from typing import Literal
 
 import pytest
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 import llmp.services.job_manager as jm
 import llmp.services.job_storage as js
 

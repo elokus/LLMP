@@ -2,7 +2,7 @@ import pytest
 from llmp.services.job_manager import JobManager
 from llmp.components.settings.program_settings import ProgramSettings
 from llmp.types import IOModelDefinition
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 from typing import Literal
 
 class InputObject(BaseModel):

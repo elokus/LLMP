@@ -22,7 +22,7 @@ This would simplify the logging process but would make it harder to track the us
 
 from typing import Optional
 from uuid import uuid4
-from pydantic import BaseModel, validator, UUID4, Field
+from structgenie.pydantic_v1 import BaseModel, validator, Field
 
 from llmp.types import VerificationType
 from llmp.integration.structgenie import Example

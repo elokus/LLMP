@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Protocol, List, Dict, Optional, Any, Union
 
-from pydantic import UUID4
+from structgenie.pydantic_v1 import UUID4
 from tqdm import tqdm
 
 from llmp.data_model.events import Event

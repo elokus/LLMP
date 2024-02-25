@@ -34,7 +34,7 @@ import json
 from uuid import uuid4
 
 from pathlib import Path
-from pydantic import BaseModel, UUID4, Field, validator, root_validator, PrivateAttr
+from structgenie.pydantic_v1 import BaseModel, UUID4, Field, validator, root_validator, PrivateAttr
 from typing import List, Dict, Optional, Any, Union, Type
 
 from llmp.data_model.events import Event

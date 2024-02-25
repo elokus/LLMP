@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 
 
 class PromptType(str, Enum):

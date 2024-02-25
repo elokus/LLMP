@@ -35,3 +35,42 @@ Input_output_pairs: {example_set}
 ---
 Instructions: <list, rule=(length={num_instructions})>
 """
+
+INSTRUCTION_ALTERING_TEMPLATE_1 = (
+    "Revise the following instruction to enhance clarity and conciseness. "
+    "Focus on simplifying complex phrases, eliminating redundant words, and making the "
+    "instruction straightforward without losing its original purpose and technical "
+    "accuracy."
+)
+
+INSTRUCTION_ALTERING_TEMPLATE_2 = (
+    "Expand the following instruction by adding necessary context and background "
+    "information. Ensure that the added information is directly relevant to the "
+    "instruction and aids in understanding the task better, "
+    "especially for users who might be new to this topic."
+)
+
+INSTRUCTION_ALTERING_TEMPLATE_3 = (
+    "Rewrite the following instruction using user-friendly language. "
+    "Replace technical terms with simpler, everyday language where possible, "
+    "while maintaining the instruction's accuracy and technical integrity. "
+    "The revised instruction should be easily understandable by a non-expert audience."
+)
+
+INSTRUCTION_ALTERING_TEMPLATE_4 = (
+    "Modify the following instruction to include personalized elements. "
+    "This can include addressing the user directly, using relatable examples, "
+    "or tying the instruction to common user experiences. Ensure the personalization "
+    "adds value and does not detract from the clarity of the instruction."
+)
+
+INSTRUCTION_ALTERING_TEMPLATE_5 = (
+    "Transform the following instruction by incorporating a role assignment. "
+    "Choose a role that is relevant and adds an interesting perspective "
+    "to the instruction. The role could be a professional "
+    "(like a scientist or a journalist), a fictional character, "
+    "or any persona that would give a unique twist to the instruction. "
+    "Ensure that the role chosen enhances the purpose of the instruction and adds a "
+    "distinct style or approach to how the task should be carried out."
+)
+

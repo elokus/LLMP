@@ -27,6 +27,42 @@ Existing Example Inputs: {input_example}
 Outputs: <list, rule=(length={num_examples})>
 """
 
+EXTEND_INPUTS_TEMPLATE_2 = """# Revised Instruction
+You are tasked with creating additional example inputs for a given set of instructions. Your role is similar to a data analyst who meticulously develops detailed examples based on specific criteria.
+Your goal is to expand this list by adding {num_examples} new examples. 
+Each new example should be unique and not replicate the existing ones.
+
+# Examples
+
+Instruction: Specify the source data that needs to be collected for the creation of the output based on the description of the output product and the outlined structure of the product.
+Number of items: 2
+Existing Example Inputs:
+  - Description: A marketing report analyzing customer segmentation to be created
+    Structure: Introduction, Methodology, Segmentation Results, Analysis, Conclusion
+  - Description: A documentation for a local Python project to be created
+    Structure: Introduction, Installation, Usage, Examples, Conclusion
+---
+Outputs:
+- Description: A machine learning model for sentiment analysis to be created and trained
+  Structure: Data Collection, Preprocessing, Model Training, Evaluation, Deployment
+- Description: An action plan to schedule and invite the sales staff to a meeting to be executed
+  Structure: Meeting Agenda, Participant List, Meeting Logistics, Follow-up Plan
+
+# Remarks
+
+Based on the instruction below, generate {num_examples} new example inputs. Consider different contexts and applications where this instruction could be relevant.
+Remember, your role is not just to create examples, but to ensure they are diverse, relevant, and align with the given instruction. 
+Think creatively and analytically, as a data analyst would, to cover a broad range of potential applications.
+
+# Input
+Instruction: {instruction}
+Number of items: {num_examples}
+Existing Example Inputs: {input_example}
+# Output
+Outputs: <list, rule=(length={num_examples})>
+"""
+
+
 MAJORITY_GRADE_TEMPLATE = """# Instruction
 You are comparing different outputs for a given generation task. You are asked to grade the outputs based on their quality from 1 (worst) to 5 (best).
 Below you find the instruction and the input for the generation task as well as a list of existing outputs.

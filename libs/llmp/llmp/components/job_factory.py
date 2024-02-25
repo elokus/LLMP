@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Union, Type
 
-from pydantic import BaseModel
+from structgenie.pydantic_v1 import BaseModel
 
 from llmp.data_model import JobRecord, ExampleRecord
 from llmp.types import VerificationType
