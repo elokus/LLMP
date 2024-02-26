@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyllmp"
-version = "0.0.8"
+version = "0.0.10"
 description = "large language model Programming - Type safe structured generation"
 license = "MIT"
 authors = ["elokow <lukas.kowejsza@gmail.com>"]
@@ -23,7 +23,7 @@ tiktoken = ">=0.3.0,<1.0"
 jsonlines ="4.0.0"
 structgenie = {path = "../StructGenie", develop = false}
 uuid = "^1.30"
-openai = ">=1.3.5"
+openai = "<2"
 tqdm = "^4.62.3"
 
 [tools.poetry.group.dev.dependencies]

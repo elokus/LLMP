@@ -1,4 +1,5 @@
 from structgenie.engine import StructEngine as Engine
+from structgenie.engine import ConditionalEngine
 from structgenie.engine.async_engine import AsyncEngine
 from structgenie.components.examples.base import Example
 from structgenie.components.input_output import InputModel, OutputModel

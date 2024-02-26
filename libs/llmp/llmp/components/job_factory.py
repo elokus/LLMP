@@ -76,6 +76,10 @@ class ModelJobCreator(JobCreator):
         """Create a new zero-shot job."""
         input_model = InputModel.from_pydantic(input_model)
         output_model = OutputModel.from_pydantic(output_model)
+
+        if kwargs.get("output_model_cond"):
+            output_model_cond = OutputModel.from_pydantic(kwargs.get("output_model_cond"))
+            kwargs["output_model_cond"] = output_model_cond
         
         return self._create_job(
             job_name=job_name,
@@ -118,7 +122,7 @@ class ExampleJobCreator(JobCreator):
 
 class TemplateJobCreator(JobCreator):
     """
-    Class for creating template jobs.
+    Class for creating jobs from template.
     """
 
     def create_job(

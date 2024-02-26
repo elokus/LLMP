@@ -49,6 +49,7 @@ from llmp.integration.structgenie import (
     Engine,
     ExampleSelector,
     PromptBuilder,
+    ConditionalEngine,
 )
 from llmp.utils.io_model import hash_from_io_models
 from llmp.utils.signature import is_valid_uuid
@@ -106,6 +107,8 @@ class JobRecord(BaseModel):
 
     input_model: InputModel
     output_model: OutputModel
+    output_model_cond: Optional[OutputModel] = None
+    condition: Optional[str] = None
 
     example_records: List[ExampleRecord] = Field(default_factory=list)
     instruction: Optional[str] = None
@@ -242,6 +245,11 @@ def load_engine_from_job(
     """
     if not engine_cls:
         engine_cls = Engine
+
+    if job.output_model_cond and job.condition:
+        engine_cls = ConditionalEngine
+        kwargs["output_model_else"] = job.output_model_cond
+        kwargs["condition"] = job.condition
 
     job_settings = job_settings or {}
 
