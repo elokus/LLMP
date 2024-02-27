@@ -1,15 +1,14 @@
 [tool.poetry]
 name = "pyllmp"
-version = "0.0.10"
+version = "0.0.13"
 description = "large language model Programming - Type safe structured generation"
 license = "MIT"
 authors = ["elokow <lukas.kowejsza@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/elokus/LLMP"
 packages = [
-    { include = "llmp", from = "libs" },
+    { include = "llmp", from = "libs/llmp" },
     { include = "llmp-monitor", from = "libs"}
-
 ]
 
 [tool.poetry.group.docs]
@@ -25,7 +24,7 @@ tiktoken = ">=0.3,<1.0"
 jsonlines ="4.0.0"
 uuid = "^1.30"
 tqdm = "^4.62.3"
-structgenie = ">=0.1.20"
+structgenie = ">=0.1.21"
 
 [tools.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
