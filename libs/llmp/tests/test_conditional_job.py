@@ -1,6 +1,4 @@
 import pytest
-
-from llmp.components.settings.program_settings import ProgramSettings
 from llmp.pydantic_v1 import BaseModel
 from llmp.services.job_manager import JobManager
 from llmp.services.program import Program
@@ -23,7 +21,6 @@ def conditional_job_idx(job_manager):
 
     class OutputObjectConditional(BaseModel):
         missing_information: str
-
 
     job = job_manager.create_job(
         "Extract data from text input",
