@@ -4,6 +4,7 @@
 /llmp.egg-info
 /_notebooks
 /data
+.env
 **/errors.log
 
 # docs

@@ -25,6 +25,7 @@ jsonlines ="4.0.0"
 uuid = "^1.30"
 tqdm = "^4.62.3"
 structgenie = ">=0.1.21"
+jupyter = "^1.0.0"
 
 [tools.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
