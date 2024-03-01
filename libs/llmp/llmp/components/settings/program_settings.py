@@ -1,5 +1,7 @@
 from enum import Enum
 
+from structgenie.driver.mistral_driver import MistralDriver
+from structgenie.driver.openai_driver import OpenAIDriver
 from structgenie.pydantic_v1 import BaseModel
 
 
@@ -37,7 +39,7 @@ class ProgramSettings(BaseModel):
     early_stopping_patience: int = 2
 
     # Model settings
-    model_name: str = "gpt-3.5-turbo"
+    model_name: str = "open-mixtral-8x7b" # "gpt-3.5-turbo-0125" # "mistral-medium-latest" # "gpt-3.5-turbo" #"open-mixtral-8x7b" #"gpt-3.5-turbo-0125"
     max_token: int = 3000
     temperature: float = 0.9
     top_p: float = 1
@@ -89,3 +91,8 @@ class ProgramSettings(BaseModel):
             "code-cushman-001": 2048,
         }
         return model_token_mapping.get(model_name, 2049)
+
+
+
+
+
