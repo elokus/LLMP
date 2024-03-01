@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from enum import Enum
 from uuid import UUID
 
@@ -10,6 +11,8 @@ class JSONEncoder(json.JSONEncoder):
             return obj.hex
         if isinstance(obj, Enum):
             return obj.value
+        if isinstance(obj, datetime):
+            return str(obj)
 
         return json.JSONEncoder.default(self, obj)
 

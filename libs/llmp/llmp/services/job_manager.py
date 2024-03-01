@@ -51,7 +51,7 @@ class JobManager:
 
         # check if job already exists
         if self.job_storage.key_in_registry(job.io_hash):
-            job = self.job_storage.get(io_hash=hash_from_io_models(job.input_model, job.output_model, job.instruction))
+            job = self.job_storage.get(io_hash=hash_from_io_models(job.input_model, job.output_model, job.instruction, config=config))
             print(f"Job with identical InputModel and OutputModel already exists. Using existing {job.job_name} instead.")
             return job
 
