@@ -266,6 +266,8 @@ def load_engine_from_job(
         output_model=job.output_model,
         examples=ExampleSelector.load_examples(job.get_examples(job_settings)),
         return_metrics=return_metrics,
+        model_name=job.config["model_name"],
+        llm_kwargs=job.config.get("llm_kwargs", {}),
         **kwargs
     )
 

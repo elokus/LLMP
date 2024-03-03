@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, date
 from enum import Enum
 from uuid import UUID
 
@@ -12,6 +12,8 @@ class JSONEncoder(json.JSONEncoder):
         if isinstance(obj, Enum):
             return obj.value
         if isinstance(obj, datetime):
+            return str(obj)
+        if isinstance(obj, date):
             return str(obj)
 
         return json.JSONEncoder.default(self, obj)
