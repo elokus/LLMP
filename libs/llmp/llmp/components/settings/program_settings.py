@@ -39,7 +39,7 @@ class ProgramSettings(BaseModel):
     early_stopping_patience: int = 2
 
     # Model settings
-    model_name: str = "open-mixtral-8x7b" # "gpt-3.5-turbo-0125" # "mistral-medium-latest" # "gpt-3.5-turbo" #"open-mixtral-8x7b" #"gpt-3.5-turbo-0125"
+    model_name: str = "gpt-3.5-turbo-0125" # "gpt-3.5-turbo-0125" # "mistral-medium-latest" # "gpt-3.5-turbo" #"open-mixtral-8x7b" #"gpt-3.5-turbo-0125"
     max_token: int = 3000
     temperature: float = 0.9
     top_p: float = 1

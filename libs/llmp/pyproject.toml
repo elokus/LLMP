@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "llmp"
-version = "0.0.12"
+version = "0.0.14"
 description = "large language model Programming - Type safe structured generation"
 license = "MIT"
 authors = ["elokow <lukas.kowejsza@gmail.com>"]

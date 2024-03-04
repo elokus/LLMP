@@ -22,7 +22,8 @@ def output_model():
 @pytest.fixture
 def program(input_model, output_model):
     signature = "test_signature"
-    program = Program(signature, input_model, output_model)
+    instruction = "Return the genre of a book based on its title, author, and release year."
+    program = Program(signature, input_model, output_model, instruction=instruction)
     return program
 
 def test_init(program):

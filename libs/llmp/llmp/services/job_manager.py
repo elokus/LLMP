@@ -51,14 +51,16 @@ class JobManager:
 
         # check if job already exists
         if self.job_storage.key_in_registry(job.io_hash):
-            job = self.job_storage.get(io_hash=hash_from_io_models(job.input_model, job.output_model, job.instruction, config=config))
+            job = self.job_storage.get(
+                io_hash=hash_from_io_models(job.input_model, job.output_model, job.instruction, config=config)
+            )
             print(f"Job with identical InputModel and OutputModel already exists. Using existing {job.job_name} instead.")
             return job
 
         # check if job_name already exists
         if self.job_storage.key_in_registry(job.job_name):
             job.job_name = safe_job_name(job_name, self.job_storage.get_registry_keys())
-            print(f"Job name '{job_name}' already exists. Using '{job.job_name}' instead.")
+            print(f"Job name '{job_name}' already exists. Using name '{job.job_name}' instead.")
 
         # register job
         self.job_storage.register_job(job)
@@ -139,9 +141,15 @@ class JobManager:
         """Submit an example for human verification and get the result."""
         pass
 
-    def get_job_by_input_output_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None) -> JobRecord:
+    def get_job_by_input_output_model(
+            self,
+            input_model: IOModelDefinition,
+            output_model: IOModelDefinition,
+            instruction: str = None,
+            config: dict = None
+    ) -> JobRecord:
         """Retrieve a job by input/output model."""
-        return self.job_storage.get(io_hash=hash_from_io_models(input_model, output_model, instruction))
+        return self.job_storage.get(io_hash=hash_from_io_models(input_model, output_model, instruction, config=config))
 
 
     def log_action(self, action: str, job_id: str):

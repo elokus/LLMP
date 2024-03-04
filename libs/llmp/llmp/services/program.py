@@ -155,7 +155,9 @@ class Program:
 
     def _load_by_io_model(self, input_model: IOModelDefinition, output_model: IOModelDefinition, instruction: str = None):
         try:
-            self.job = self.job_manager.get_job_by_input_output_model(input_model, output_model)
+            self.job = self.job_manager.get_job_by_input_output_model(
+                input_model, output_model, instruction=instruction, config=self.config.dict()
+            )
             return True
         except:
             return False

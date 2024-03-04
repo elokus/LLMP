@@ -8,7 +8,12 @@ import hashlib
 
 # === hash_from_model ===
 
-def hash_from_io_models(input_model: UnionIOModel, output_model: UnionIOModel, instruction: str = None, **kwargs):
+def hash_from_io_models(
+        input_model: UnionIOModel,
+        output_model: UnionIOModel,
+        instruction: str = None,
+        config: dict = None,
+        **kwargs):
     """Create a hash from a model.
 
     model must be either InputModel or OutputModel.
@@ -20,13 +25,15 @@ def hash_from_io_models(input_model: UnionIOModel, output_model: UnionIOModel, i
     if instruction:
         models += instruction
 
+    if config:
+        models += str(config)
+
     if kwargs:
         for item in [{k: v} for k, v in kwargs.items() if k not in ["input_model", "output_model", "instruction"]]:
             try:
                 models += str(item)
             except:
                 pass
-        models += str(kwargs)
 
     return hashlib.md5(bytes(str(models), "utf-8")).hexdigest()
 

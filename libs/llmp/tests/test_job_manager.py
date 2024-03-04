@@ -87,7 +87,9 @@ def test_get_job_by_input_output_model(job_manager, input_model, output_model, c
         output_model=output_model,
         config=config.dict()
     )
-    retrieved_job = job_manager.get_job_by_input_output_model(input_model, output_model)
+    retrieved_job = job_manager.get_job_by_input_output_model(
+        input_model, output_model, config=config.dict()
+    )
     assert retrieved_job.idx == job.idx
     job_manager.delete_job(job.idx)
 
