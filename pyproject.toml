@@ -8,7 +8,8 @@ readme = "README.md"
 repository = "https://github.com/elokus/LLMP"
 packages = [
     { include = "llmp", from = "libs/llmp" },
-    { include = "llmp-monitor", from = "libs"}
+    { include = "llmp-monitor", from = "libs" },
+    { include = "llmp-agent", from = "libs" }
 ]
 
 [tool.poetry.group.docs]
