@@ -11,17 +11,22 @@ from typing import (
 )
 
 from typing_extensions import TypedDict
-from llmp.pydantic_v1 import BaseModel
+from pydantic_v1 import BaseModel
 from copy import deepcopy
 from typing import Any, List, Optional, Sequence
 import re
 
+from structgenie.components.input_output import OutputModel
 
 PYTHON_TO_JSON_TYPES = {
     "str": "string",
     "int": "integer",
     "float": "number",
     "bool": "boolean",
+    "list": "array",
+    "listdict": "array",
+    "liststr": "array",
+    "dict": "object",
 }
 
 
@@ -182,6 +187,7 @@ def _get_python_function_required_args(function: Callable) -> List[str]:
 
 def convert_python_function_to_openai_function(
     function: Callable,
+    name: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Convert a Python function to an OpenAI function-calling API compatible dict.
 
@@ -191,7 +197,7 @@ def convert_python_function_to_openai_function(
     """
     description, arg_descriptions = _parse_python_function_docstring(function)
     return {
-        "name": _get_python_function_name(function),
+        "name": name or _get_python_function_name(function),
         "description": description,
         "parameters": {
             "type": "object",
@@ -203,6 +209,8 @@ def convert_python_function_to_openai_function(
 
 def convert_to_openai_function(
     function: Union[Dict[str, Any], Type[BaseModel], Callable],
+    name: Optional[str] = None,
+    description: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Convert a raw function/class to an OpenAI function.
 
@@ -210,6 +218,8 @@ def convert_to_openai_function(
         function: Either a dictionary, a pydantic.BaseModel class, or a Python function.
             If a dictionary is passed in, it is assumed to already be a valid OpenAI
             function.
+        name: The name of the function. If not provided, the name will be inferred from
+        description : Optional[str] = None,
 
     Returns:
         A dict version of the passed in function which is compatible with the
@@ -219,7 +229,7 @@ def convert_to_openai_function(
     if isinstance(function, dict):
         return function
     elif isinstance(function, type) and issubclass(function, BaseModel):
-        return cast(Dict, convert_pydantic_to_openai_function(function))
+        return cast(Dict, convert_pydantic_to_openai_function(function, name=name, description=description))
     elif callable(function):
         return convert_python_function_to_openai_function(function)
     else:
@@ -230,7 +240,9 @@ def convert_to_openai_function(
 
 
 def convert_to_openai_tool(
-    tool: Union[Dict[str, Any], Type[BaseModel], Callable],
+    tool: Union[Dict[str, Any], Type[BaseModel], Callable, OutputModel],
+    name: Optional[str] = None,
+    description: Optional[str] = None
 ) -> Dict[str, Any]:
     """Convert a raw function/class to an OpenAI tool.
 
@@ -238,19 +250,113 @@ def convert_to_openai_tool(
         tool: Either a dictionary, a pydantic.BaseModel class, Python function, or
             BaseTool. If a dictionary is passed in, it is assumed to already be a valid
             OpenAI tool or OpenAI function.
+        name: The name of the tool. If not provided, the name will be inferred from the
+        description : Optional[str] = None,
 
     Returns:
         A dict version of the passed in tool which is compatible with the
             OpenAI tool-calling API.
     """
+
+
     if isinstance(tool, dict) and "type" in tool:
         return tool
-    function = convert_to_openai_function(tool)
+    if isinstance(tool, OutputModel):
+        function = convert_output_model_to_openai_function(tool, name, description)
+    else:
+        function = convert_to_openai_function(tool, name=name, description=description)
     return {"type": "function", "function": function}
 
 
+def convert_output_model_to_openai_function(model, name: str, description: str) -> Dict[str, Any]:
+    parameter = output_model_to_parameters_dict(model)
+
+    return {
+        "name": name,  # type: ignore
+        "description": description or "",  # type: ignore
+        "parameters": parameter,
+    }
+
 
 # --- Utils ---
+
+def output_model_to_parameters_dict(model) -> dict:
+    main_properties = {}
+    nested_properties = {}
+    for line in model.lines:
+        if "." in line.key:
+            properties = nested_properties
+        else:
+            properties = main_properties
+
+        properties[line.key] = {'type': remove_typing_annotations(line.type)}
+        if line.type == 'date' or line.type == 'datetime' or line.type == 'date-time' or "datetime" in line.type:
+            properties[line.key]['format'] = 'date-time'
+            properties[line.key]['type'] = 'str'
+
+        properties[line.key]['type'] = PYTHON_TO_JSON_TYPES.get(
+            properties[line.key]['type'], properties[line.key]['type']
+        )
+        if properties[line.key]['type'] == "array":
+            if "[" in line.type:
+                type_ = remove_typing_annotations(line.type.split("[")[1].split("]")[0])
+                properties[line.key]['items'] = {'type': PYTHON_TO_JSON_TYPES.get(type_, type_)}
+
+        if line.description:
+            properties[line.key]['description'] = line.description
+
+        if line.options:
+            properties[line.key]['enum'] = line.options
+
+    if nested_properties:
+        main_properties = unpack_nested_properties(main_properties, nested_properties)
+
+    required = [line.key for line in model.lines if line.default is None and "Optional" not in line.type and "." not in line.key]
+    parameters = {'type': 'object', 'properties': main_properties, "required": required}
+    return parameters
+
+
+def unpack_nested_properties(properties: dict, nested_properties: dict) -> dict:
+    """unpack nested properties up to 2 levels deep"""
+
+    new_properties = {}
+    for key, value in nested_properties.items():
+        parent_key = key.split(".")[0]
+        child_key = key.split(".")[1]
+
+        if "." in child_key:
+            raise ValueError("Nested properties should only be 2 levels deep")
+
+        if parent_key not in new_properties:
+            new_properties[parent_key] = {"type": "object", "properties": {}}
+        new_properties[parent_key]["properties"][child_key] = value
+
+    for key, value in properties.items():
+        if key in new_properties:
+            if properties[key]["type"] == "object":
+                properties[key]["properties"] = properties[key]["properties"]
+            elif properties[key]["type"] == "array":
+                properties[key]["items"] = new_properties[key]
+            else:
+                raise ValueError(f"Unexpected type {properties[key]['type']} in nested properties")
+    return properties
+
+
+def remove_typing_annotations(type_str: str) -> str:
+    """Remove typing annotations from a type string."""
+    new_type_str = str(type_str)
+    return (new_type_str
+            .replace("typing.", "")
+            .replace("Literal", "enum")
+            .replace("Optional", "")
+            .replace("Union", "")
+            .replace("[", "")
+            .replace("]", "")
+            .replace("(", "")
+            .replace(")", "")
+            .replace(" ", "")
+            .replace("'", "")
+            .replace('"', ""))
 
 
 def _retrieve_ref(path: str, schema: dict) -> dict:
@@ -330,6 +436,8 @@ def split_on_capital_case(s):
     If multiple capital case letters are together, they are considered as one word.
     """
     matches = re.findall(r'[A-Z][a-z]*', s)
+    if not matches:
+        return [s]
     result = []
     temp = ''
     for match in matches:

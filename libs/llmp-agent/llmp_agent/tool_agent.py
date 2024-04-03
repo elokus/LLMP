@@ -7,15 +7,7 @@ from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageToolCall, ChatCompletionMessage
 
 from llmp.pydantic_v1 import BaseModel, Field
-from structgenie.components.validation import Validator
-
-from .convert import convert_to_openai_tool, split_on_capital_case
-
-
-class ToolResult(BaseModel):
-    content: str
-    success: bool
-    metrics: Optional[dict] = None
+from llmp_agent.base_tool import BaseTool, ToolResult, report_tool
 
 
 class StepResult(BaseModel):
@@ -24,51 +16,9 @@ class StepResult(BaseModel):
     success: bool
 
 
-class Tool(BaseModel):
-    name: str
-    model: Type[BaseModel]
-    function: Optional[Callable] = None
-
-    class Config:
-        arbitrary_types_allowed = True
-
-    @classmethod
-    def from_pydantic(cls, model: Type[BaseModel], function: Callable = None):
-        title = split_on_capital_case(model.schema()["title"])
-        title = "_".join(title).lower()
-        if not "tool" in title:
-            title = f"{title}_tool"
-        return cls(name=title, model=model, function=function)
-
-    def run(self, **kwargs) -> ToolResult:
-        validator = Validator.from_pydantic(self.model)
-        validation_errors = validator.validate(kwargs)
-        if validation_errors:
-            content = "\n".join([str(v) for v in validation_errors])
-            return ToolResult(content=content, success=False)
-
-        result = self.function(**kwargs)
-        if isinstance(result, ToolResult):
-            return result
-
-        return ToolResult(content=str(result), success=True)
-
-    @property
-    def openai_tool(self):
-        return convert_to_openai_tool(self.model)
-
-    @property
-    def openai_tool_all_optional(self):
-        openai_tool = self.openai_tool.copy()
-        if openai_tool["function"].get("required"):
-            # remove required fields
-            openai_tool["function"]["required"] = []
-        return openai_tool
-
-
 class BaseAgent(BaseModel, ABC):
     name: str
-    tools: list[Tool]
+    tools: list[BaseTool]
 
     @abstractmethod
     def run(self, *args, **kwargs):
@@ -94,12 +44,22 @@ Use the report_tool to communicate the challenge or reason for the task's incomp
 You will receive feedback based on the outcomes of each tool's task execution or explanations for any tasks that couldn't be completed. This feedback loop is crucial for addressing and resolving any issues by strategically deploying the available tools.
 """
 
+TOOL_SUCCESS_MESSAGE = ("Your last action succeed. "
+                        "If you have completed the task, "
+                        "please use the report_tool to submit the final result to the user's question. "
+                        "Otherwise use other tools to continue the task.")
+
+TOOL_FAILED_MESSAGE = ("Your last action failed. "
+                       "Review the chat history or use other tools to obtain the correct parameters. "
+                       "If you need additional information for the task, "
+                       "use the report_tool to ask for additional information.")
+
 
 class OpenAIAgent(BaseAgent):
 
     name: str = "AgentOrchestor"
     description: str = "Orchestrate the agents to complete a task."
-    tools: list[Tool]
+    tools: list[Union[BaseTool, Tool]]
 
     client: OpenAI = Field(default_factory=OpenAI)
     model_name: str = "gpt-3.5-turbo-0125"
@@ -111,22 +71,25 @@ class OpenAIAgent(BaseAgent):
     max_steps: int = 5
 
     system_message: str = SYSTEM_MESSAGE
+    tool_success_message: Optional[str] = TOOL_SUCCESS_MESSAGE
+    tool_failed_message: Optional[str] = TOOL_FAILED_MESSAGE
 
     class Config:
         arbitrary_types_allowed = True
 
     def prepare_tools(self):
-        return [tool.openai_tool_all_optional for tool in self.tools]
+        tools = [tool.openai_tool_all_optional for tool in self.tools]
+        return [*tools, report_tool.openai_tool_all_optional]
 
     @property
     def tool_dict(self):
         return {tool.name: tool for tool in self.tools}
 
-    def prepare_input(self, step_result: StepResult | None, **kwargs):
+    def prepare_input(self, step_result: StepResult | None, user_input, **kwargs):
         if step_result is None:
             messages = [
                 {"role": "system", "content": self.system_message},
-                {"role": "user", "content": kwargs.get("input")}
+                {"role": "user", "content": user_input}
             ]
             for message in messages:
                 self.step_history.append(message)
@@ -135,31 +98,29 @@ class OpenAIAgent(BaseAgent):
 
         elif step_result.success:
             messages = [m for m in self.step_history]
-            messages.append(
-                {"role": "user",
-                 "content": "Your last action succeed. "
-                            "If you have completed the task, please use the report_tool to submit the result. "
-                            "Otherwise use other tools to continue the task."
-                 }
-            )
+            if self.tool_success_message:
+                messages.append(
+                    {"role": "user",
+                     "content": self.tool_success_message
+                     }
+                )
             tools = self.prepare_tools()
             return messages, tools
 
         else:
             messages = [m for m in self.step_history]
-            messages.append(
-                {"role": "user",
-                 "content": "Your last action failed. "
-                            "Review the chat history or use other tools to optain the correct parameters. "
-                            "If you need additional information for the task, "
-                            "use the report_tool to ask for additional information."
-                 }
-            )
+
+            if self.tool_failed_message:
+                messages.append(
+                    {"role": "user",
+                     "content": self.tool_failed_message
+                     }
+                )
             tools = self.prepare_tools()
             return messages, tools
 
-    def run(self, **kwargs):
-        self.to_console("INFO", f"Running {self.name} with {kwargs}")
+    def run(self, user_input: str, **kwargs):
+        self.to_console("START", f"User Input: {user_input}")
 
         self.memory = kwargs.get("memory", [])
         step_result = None
@@ -167,7 +128,7 @@ class OpenAIAgent(BaseAgent):
 
         while i < self.max_steps:
             try:
-                messages, tools = self.prepare_input(step_result, **kwargs)
+                messages, tools = self.prepare_input(step_result, user_input)
                 step_result = self.run_step(messages, tools, **kwargs)
                 if step_result.event == "finish":
                     break
@@ -198,15 +159,15 @@ class OpenAIAgent(BaseAgent):
 
             self.to_console("Tool Call", f"Name: {tool_name}\nArgs: {args}", "magenta")
 
-            if tool_name not in self.tool_dict:
+            if tool_name == "report_tool":
+                tool_result = ToolResult(content=args["report"], success=True)
+
+            elif tool_name not in self.tool_dict:
                 tool_result = ToolResult(
                     content=f"Unknown tool: {tool_name}. "
                             f"Please select one of the following tools: {list(self.tool_dict.keys())}",
                     success=False
                 )
-
-            elif tool_name == "report_tool":
-                tool_result = ToolResult(content=args["result"], success=True)
 
             else:
                 tool = self.tool_dict[tool_name]
